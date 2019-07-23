@@ -1,0 +1,3 @@
+[mysqld]
+# mysql8系での認証方法を以前のものに設定する
+default_authentication_plugin=mysql_native_password

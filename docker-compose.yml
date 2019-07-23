@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./deploy
+      dockerfile: Dockerfile_web
+    volumes:
+      - ./server:/var/www
+    ports:
+      - ${WEB_PORT}:80
+    links:
+      - app
+
+  app:
+    build:
+      context: ./deploy
+      dockerfile: Dockerfile_app
+    tty: true
+    restart: always
+    volumes:
+      - ./server:/var/www
+    links:
+      - db
+
+  db:
+    image: mysql:latest
+    volumes:
+      - ./.data:/var/lib/mysql
+      - ./mysql_conf:/etc/mysql/conf.d
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: Asia/Tokyo
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci

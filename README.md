@@ -1,5 +1,5 @@
 # Transporter
-## Vue.js + Firebase + Lumen(Micro-Framework By laravel)
+## Vue.js + Firebase + Laravel
 
 ## Frontend
 ### Vue.js needed
@@ -7,11 +7,16 @@
 - npm
 
 ## Backend API
-### Lumen needed
-- PHP >= v7.1.3
-- Openssl PHP Extenstion
-- PDO PHP Extension
+### Laravel needed
+- PHP >= 7.1.3
+- BCMath PHP Extension
+- Ctype PHP Extension
+- JSON PHP Extension
 - Mbstring PHP Extension
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
 
 ### MySQL v8.0.x
 
@@ -21,7 +26,7 @@ transporter/
   ├ client/
   │  └ Vue.js on Vue CLI 3
   ├ server/
-  │  └ Lumen Project
+  │  └ Laravel Project
   ├ deploy/
   │  └ Dockerfile on Each Service
   ├ mysql_conf

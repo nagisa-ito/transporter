@@ -5,6 +5,8 @@ services:
     build:
       context: ./deploy
       dockerfile: Dockerfile_web
+    environment:
+      TZ: Asia/Tokyo
     volumes:
       - ./server/public:/var/www/public
     ports:
@@ -16,6 +18,8 @@ services:
     build:
       context: ./deploy
       dockerfile: Dockerfile_app
+    environment:
+      TZ: Asia/Tokyo
     tty: true
     restart: always
     volumes:

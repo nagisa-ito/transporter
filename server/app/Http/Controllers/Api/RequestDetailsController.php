@@ -79,6 +79,7 @@ class RequestDetailsController extends Controller
         $request_detail->cost              = $request->cost;
         $request_detail->overview          = $request->overview;
         $article->save();
+        // TODO: 論理削除した時は一覧ページにリダイレクト
         return redirect("api/request_details/{$id}");
     }
 

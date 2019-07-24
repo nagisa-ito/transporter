@@ -23,4 +23,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['api']], function () {
     // APIにはcreate, editの処理は不要なので削除する
     Route::resource('users', 'Api\UsersController', ['except' => ['create', 'edit']]);
+    Route::resource('request_details', 'Api\RequestDetailsController', ['except' => ['create', 'edit']]);
+    Route::resource('sections', 'Api\SectionsController', ['except' => ['create', 'edit']]);
 });

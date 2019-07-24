@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequestTypesTable extends Migration
+class CreateRequestDetailTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRequestTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('request_types', function (Blueprint $table) {
+        Schema::create('request_detail_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('name', 40);
         });
@@ -26,6 +26,6 @@ class CreateRequestTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('request_types');
+        Schema::dropIfExists('request_detail_types');
     }
 }

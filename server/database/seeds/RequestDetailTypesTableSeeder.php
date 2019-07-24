@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class RequestTypesTableSeeder extends Seeder
+class RequestDetailTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class RequestTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('request_types')->insert([
+        DB::table('request_detail_types')->insert([
             ['name' => '通勤費'],
             ['name' => '定期代'],
             ['name' => '営業交通費'],

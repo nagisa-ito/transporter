@@ -6,7 +6,7 @@ services:
       context: ./deploy
       dockerfile: Dockerfile_web
     volumes:
-      - ./server:/var/www
+      - ./server/public:/var/www/public
     ports:
       - ${WEB_PORT}:80
     links:

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequestDetailTypesTable extends Migration
+class CreateConfirmMonthsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateRequestDetailTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('request_detail_types', function (Blueprint $table) {
+        Schema::create('confirm_months', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('name', 40);
+            $table->integer('user_id');
+            $table->char('year_month', 40);
+            $table->timestamps();
         });
     }
 
@@ -26,6 +28,6 @@ class CreateRequestDetailTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('request_detail_types');
+        Schema::dropIfExists('confirm_months');
     }
 }

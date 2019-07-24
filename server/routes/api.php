@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 |
 */
 
+// TODO: adminユーザーと一般ユーザーでルーティングファイルを分ける
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -25,4 +27,5 @@ Route::group(['middleware' => ['api']], function () {
     Route::resource('users', 'Api\UsersController', ['except' => ['create', 'edit']]);
     Route::resource('request_details', 'Api\RequestDetailsController', ['except' => ['create', 'edit']]);
     Route::resource('sections', 'Api\SectionsController', ['except' => ['create', 'edit']]);
+    Route::resource('confirm_months', 'Api\ConfirmMonthsController', ['only' => ['store', 'destroy']]);
 });

@@ -16,7 +16,6 @@ class CreateRequestTypesTable extends Migration
         Schema::create('request_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('name', 40);
-            $table->timestamps();
         });
     }
 

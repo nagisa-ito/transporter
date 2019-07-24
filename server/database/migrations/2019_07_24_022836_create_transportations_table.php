@@ -16,7 +16,6 @@ class CreateTransportationsTable extends Migration
         Schema::create('transportations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('name', 100);
-            $table->timestamps();
         });
     }
 

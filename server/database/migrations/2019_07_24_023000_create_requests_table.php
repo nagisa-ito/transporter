@@ -17,6 +17,7 @@ class CreateRequestsTable extends Migration
             $table->bigIncrements('id');
             $table->char('name', 100);
             $table->integer('user_id');
+            $table->date('date');
             $table->tinyInteger('is_delete')->default(0);
             $table->integer('type');
             $table->integer('transportation_id');

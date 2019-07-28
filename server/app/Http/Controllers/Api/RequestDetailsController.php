@@ -18,8 +18,20 @@ class RequestDetailsController extends Controller
     public function index()
     {
         // TODO: 特定のユーザーの一覧表示をするようにする
-        $request_details = RequestDetail::all();
+        // セッション？認証情報からuser_idを持ってくる adminユーザーは別の処理が必要
+        $user_id = 2;
+        $request_details = RequestDetail::where('user_id', $user_id)->get();
         return $request_details;
+    }
+
+    /**
+     * 月ごとの一覧表示
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function monthly_requests()
+    {
+        return 'monthly_requests';
     }
 
     /**

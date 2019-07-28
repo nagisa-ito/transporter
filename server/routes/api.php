@@ -36,4 +36,6 @@ Route::group(['middleware' => ['api']], function () {
     Route::resource('sections', 'Api\SectionsController', ['except' => ['create', 'edit']]);
 
     Route::resource('confirm_months', 'Api\ConfirmMonthsController', ['only' => ['store', 'destroy']]);
+
+    Route::get('monthly_requests', 'Api\VMonthlyRequestsController@index');
 });

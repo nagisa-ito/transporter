@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 // TIPS: このコントローラーで使用したいモデルがあれば随時追加をしていく
-use App\Section;
+use App\Models\Section;
 
 class SectionsController extends Controller
 {

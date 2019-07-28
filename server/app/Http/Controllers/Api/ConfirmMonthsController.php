@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 // TIPS: このコントローラーで使用したいモデルがあれば随時追加をしていく
-use App\ConfirmMonth;
+use App\Models\ConfirmMonth;
 
 class ConfirmMonthsController extends Controller
 {

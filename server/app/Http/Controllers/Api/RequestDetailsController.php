@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 // TIPS: このコントローラーで使用したいモデルがあれば随時追加をしていく
-use App\RequestDetail;
+use App\Models\RequestDetail;
 
 class RequestDetailsController extends Controller
 {
@@ -19,6 +19,7 @@ class RequestDetailsController extends Controller
     {
         // TODO: 特定のユーザーの一覧表示をするようにする
         // セッション？認証情報からuser_idを持ってくる adminユーザーは別の処理が必要
+        // TODO: yyyymmの指定もここでする
         $user_id = 2;
         $request_details = RequestDetail::where('user_id', $user_id)->get();
         return $request_details;

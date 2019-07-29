@@ -32,5 +32,29 @@ transporter/
   ├ mysql_conf
   │  └ MySQL config file
   ├ .data
-  │  └ MySQL BackUp Data
+     └ MySQL BackUp Data
+```
+
+## Usage
+```
+$ git clone https://github.com/nagisa-ito/transporter.git
+$ cd transporter
+$ cp .env.example .env
+```
+EDIT .env
+
+```
+$ docker-compose build
+$ docker-compose up -d
+$ cd server
+$ cp .env.example .env
+```
+EDIT .env
+
+```
+$ cd ..
+$ docker-compose exec app bash
+$ composer install
+$ php artisan migrate
+$ php artisan db:seed
 ```

@@ -9,6 +9,14 @@ RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client \
     #vim
     apt-get install -y vim && \
 
+    # node, npm
+    apt install -y nodejs npm && \
+
+    # node, npmを最新のバージョンにする
+    npm install n -g && \
+    n stable && \
+    apt purge -y nodejs npm && \
+
     #composer
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \

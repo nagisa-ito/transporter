@@ -19,3 +19,11 @@ Route::get('/', function () {
 });
 
 Route::get('/login', 'UsersController@login');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

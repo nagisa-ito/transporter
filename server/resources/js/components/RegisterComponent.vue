@@ -6,28 +6,49 @@
         </div>
 
         <!-- <component v-bind:is="currentTabComponent"></component> -->
-        <email-pass-component v-show="true"></email-pass-component>
-        <user-name-component v-show="false"></user-name-component>
-        <sections-component v-show="false"></sections-component>
-
-        <div class="column is-8 is-offset-2">
-            <button class="button is-primary pull-right" @click='currentTab="user-name-component"'>
-                Next
-            </button>
+        <div v-show="pages.email_pass">
+            <email-pass-component></email-pass-component>
+            <div class="column is-8 is-offset-2">
+                <button class="button is-primary pull-right" @click='slideNextPage("user_name")'>
+                    Next
+                </button>
+            </div>
         </div>
+
+        <div v-show="pages.user_name">
+            <user-name-component></user-name-component>
+            <div class="column is-8 is-offset-2">
+                <button class="button is-primary pull-right" @click='slideNextPage("sections")'>
+                    Next
+                </button>
+            </div>
+        </div>
+
+        <div v-show="pages.sections">
+            <sections-component></sections-component>
+            <div class="column is-8 is-offset-2">
+                <button class="button is-primary pull-right" @click='slideNextPage("email_pass")'>
+                    Next
+                </button>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
     export default {
         data: function () {
-            return { currentTab: 'sections-component' };
+            return { 
+                pages : {email_pass : true, user_name : false, sections : false }
+            };
         },
-        computed: {
-            currentTabComponent: function () {
-                return this.currentTab;
-            },
-
+        methods: {
+            slideNextPage: function(page_name) {
+                for (const key in this.pages) {
+                    this.pages[key] = (page_name == key) ? true : false;
+                }
+            }
         }
     }
 </script>

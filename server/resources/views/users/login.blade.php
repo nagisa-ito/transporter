@@ -28,7 +28,7 @@
                   Remember me
                 </label>
                             </div>
-                            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+                            <button class="button is-primary is-large is-fullwidth">Login</button>
                         </form>
                     </div>
                     <p class="has-text-grey">

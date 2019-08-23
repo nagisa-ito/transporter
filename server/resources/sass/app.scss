@@ -1,11 +1,22 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
+// Font Awesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
 
-// Bootstrap
-// @import '~bootstrap/scss/bootstrap';
+// Variables
+@import '_variables';
+// Mixins
+@import '_mixins';
 
 // Bulma
 @import "~bulma/bulma.sass";
+
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+
+// Origin CSS
+@import "custom";

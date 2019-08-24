@@ -24,7 +24,9 @@ export default {
     }
   },
   components: { ScalingSquaresSpinner },
-  mounted () {
+  created () {
+    // TODO: タイムアウト処理
+    // URL定数化すること
     this.Axios.get('http://localhost:3000/api/users')
       .then((res) => {
         this.users = res.data

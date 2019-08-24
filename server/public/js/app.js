@@ -166,21 +166,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      pages: {
-        email_pass: true,
-        user_name: false,
-        sections: false
-      }
+      pages: true //pages : {email_pass : true, user_name : true, sections : false }
+
     };
   },
   methods: {
-    slideNextPage: function slideNextPage(page_name) {
-      for (var key in this.pages) {
-        this.pages[key] = page_name == key ? true : false;
-      }
+    slideNextPage: function slideNextPage(page_name) {// for (const key in this.pages) {
+      //     this.pages[key] = (page_name == key) ? true : false;
+      // }
     }
   }
 });
@@ -199,7 +197,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .v-enter-active, .v-leave-active {\n  transition: opacity .5s;\n}\n.v-enter, .v-leave-to {\n  opacity: 0;\n} */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .v-enter-active, .v-leave-active {\n  transition: opacity .5s;\n}\n.v-enter, .v-leave-to {\n  opacity: 0;\n} */\n", ""]);
 
 // exports
 
@@ -1362,108 +1360,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.pages.email_pass,
-            expression: "pages.email_pass"
-          }
-        ]
-      },
-      [
-        _c("email-pass-component"),
-        _vm._v(" "),
-        _c("div", { staticClass: "column is-8 is-offset-2" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary pull-right",
-              on: {
-                click: function($event) {
-                  return _vm.slideNextPage("user_name")
-                }
-              }
-            },
-            [_vm._v("\n                Next\n            ")]
-          )
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.pages.user_name,
-            expression: "pages.user_name"
-          }
-        ]
-      },
-      [
-        _c("user-name-component"),
-        _vm._v(" "),
-        _c("div", { staticClass: "column is-8 is-offset-2" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary pull-right",
-              on: {
-                click: function($event) {
-                  return _vm.slideNextPage("sections")
-                }
-              }
-            },
-            [_vm._v("\n                Next\n            ")]
-          )
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.pages.sections,
-            expression: "pages.sections"
-          }
-        ]
-      },
-      [
-        _c("sections-component"),
-        _vm._v(" "),
-        _c("div", { staticClass: "column is-8 is-offset-2" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary pull-right",
-              on: {
-                click: function($event) {
-                  return _vm.slideNextPage("email_pass")
-                }
-              }
-            },
-            [_vm._v("\n                Next\n            ")]
-          )
-        ])
-      ],
-      1
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("email-pass-component"),
+      _vm._v(" "),
+      _c("user-name-component"),
+      _vm._v(" "),
+      _c("sections-component")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -1515,7 +1425,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "column is-6 is-offset-3" }, [
       _c("div", { staticClass: "field is-horizontal mb-30" }, [
         _c("div", { staticClass: "field-label is-normal" }, [
-          _c("label", { staticClass: "label" }, [_vm._v("Email")])
+          _c("label", { staticClass: "label" }, [_vm._v("Eメール")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "field-body" }, [
@@ -1523,7 +1433,7 @@ var staticRenderFns = [
             _c("p", { staticClass: "control is-expanded has-icons-left" }, [
               _c("input", {
                 staticClass: "input",
-                attrs: { type: "text", placeholder: "xxx.yyy@e-grant.net" }
+                attrs: { type: "email", placeholder: "xxx.yyy@e-grant.net" }
               }),
               _vm._v(" "),
               _c("span", { staticClass: "icon is-small is-left" }, [
@@ -1536,7 +1446,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "field is-horizontal" }, [
         _c("div", { staticClass: "field-label is-normal" }, [
-          _c("label", { staticClass: "label" }, [_vm._v("Password")])
+          _c("label", { staticClass: "label" }, [_vm._v("パスワード")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "field-body" }, [
@@ -1544,7 +1454,7 @@ var staticRenderFns = [
             _c("p", { staticClass: "control is-expanded has-icons-left" }, [
               _c("input", {
                 staticClass: "input",
-                attrs: { type: "text", placeholder: "Enter Password" }
+                attrs: { type: "password", placeholder: "Enter Password" }
               }),
               _vm._v(" "),
               _c("span", { staticClass: "icon is-small is-left" }, [
@@ -1563,7 +1473,7 @@ var staticRenderFns = [
             _c("p", { staticClass: "control is-expanded has-icons-left" }, [
               _c("input", {
                 staticClass: "input",
-                attrs: { type: "text", placeholder: "Re-enter Password" }
+                attrs: { type: "password", placeholder: "Re-enter Password" }
               }),
               _vm._v(" "),
               _c("span", { staticClass: "icon is-small is-left" }, [

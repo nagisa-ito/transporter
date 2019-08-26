@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Department;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -71,5 +72,17 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'department_id' => $data['department_id'],
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     * HACK: Viewに変数を渡したいのでRegistersUsersからオーバーライドしている
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $departments = Department::all();
+        return view('auth.register', compact('departments'));
     }
 }

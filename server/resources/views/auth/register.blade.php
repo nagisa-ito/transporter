@@ -109,15 +109,10 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="select">
-                            <!-- Laravel側から変数取り込み -->
                             <select name="department_id">
-                                <option value="1">セールスマーケティング部</option>
-                                <option value="2">CRM戦略推進部</option>
-                                <option value="3">CRMマネジメントサービス部</option>
-                                <option value="4">開発部</option>
-                                <option value="5">管理部</option>
-                                <option value="6">日本通販CRM協会</option>
-                                <option value="7">事業開発室</option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department['id'] }}">{{ $department['name'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

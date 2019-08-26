@@ -58,7 +58,7 @@
                     {{-- ユーザーが認証されているか --}}
                     @auth
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">{{ Auth::user()->name }}</a>
+                        <a class="navbar-link">{{ Auth::user()->first_name }}</a>
                         <div class="navbar-dropdown">
                             <a class="navbar-item">About</a>
                             <a class="navbar-item">Jobs</a>
@@ -68,7 +68,13 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <a class="button is-light" href="{{ route('logout') }}">{{ __('Log out') }}</a>
+                        <a class="button is-light" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                     @else
                     <div class="buttons">

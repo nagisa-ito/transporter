@@ -1,31 +1,29 @@
 @extends('layouts.app')
 
+@section('title', 'register')
 @section('content')
 <div class="container">
-    <div class="column is-8 is-offset-2">
-        <h2 class="title">Register</h2>
-        <progress class="progress is-small is-primary" max="100" value="25">30%</progress>
-    </div>
+    <div class="column is-6 is-offset-3 box">
+        <div class="column mb-10">
+            <h4 class="title is-4">{{ __('新規登録') }}</h4>
+        </div>
 
-    {{-- Formファザードを使うともっと簡単にかける --}}
-    <form method="POST" action="{{ route('register') }}">
-    @csrf
-        <div class="column is-6 is-offset-3">
+        {{ Form::open() }}
+        @csrf
+        <div class="column is-10 is-offset-1">
             <div class="field is-horizontal mb-30">
                 <div class="field-label is-normal">
-                    <label class="label">Eメール</label>
+                    <label class="label">メール</label>
                 </div>
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input id="email" type="email" class="input @error('email') is-invalid @enderror" autofocus
+                            <input id="email" type="email" class="input @error('email') is-danger @enderror" autofocus
                                 name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="xxx.yyy@e-grant.net">
                             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
 
-                            @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                            @error('email')
+                                <p class="help is-danger">{{ $message }}</p>
                             @enderror
                         </p>
                     </div>
@@ -39,14 +37,12 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input id="password" type="password" class="input @error('password') is-invalid @enderror"
+                            <input id="password" type="password" class="input @error('password') is-danger @enderror"
                                 name="password" required autocomplete="new-password" placeholder="Enter Password">
                             <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
 
                             @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <p class="help is-danger">{{ $message }}</p>
                             @enderror
                         </p>
                     </div>
@@ -60,15 +56,9 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input id="password-confirm" type="password" class="input @error('password-confirm') is-invalid @enderror"
+                            <input id="password-confirm" type="password" class="input @error('password-confirm') is-danger @enderror"
                                 name="password_confirmation" required autocomplete="new-password" placeholder="Re-enter Password">
                             <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
-
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                         </p>
                     </div>
                 </div>
@@ -81,14 +71,12 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input id="last_name" type="text" class="input @error('name') is-invalid @enderror"
+                            <input id="last_name" type="text" class="input @error('name') is-danger @enderror"
                                 name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" placeholder="大黒丸">
                             <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
 
-                            @error('last_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            @error('name')
+                                <p class="help is-danger">{{ $message }}</p>
                             @enderror
                         </p>
                     </div>
@@ -102,21 +90,19 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input id="first_name" type="text" class="input @error('first_name') is-invalid @enderror"
+                            <input id="first_name" type="text" class="input @error('name') is-danger @enderror"
                                 name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" placeholder="こづち">
                             <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
 
-                            @error('first_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            @error('name')
+                                <p class="help is-danger">{{ $message }}</p>
                             @enderror
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="field is-horizontal mb-30">
+            <div class="field is-horizontal mb-10">
                 <div class="field-label is-normal">
                     <label class="label">部署</label>
                 </div>
@@ -133,125 +119,16 @@
                                 <option value="6">日本通販CRM協会</option>
                                 <option value="7">事業開発室</option>
                             </select>
-
-                            @error('department_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- 定期は別テーブルなので別に登録しないといけない -->
-            <!-- <div class="field is-horizontal mb-30">
-                <div class="field-label is-normal">
-                    <label class="label">乗車駅</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                            <input class="input" type="text" placeholder="品川">
-                            <span class="icon is-small is-left"><i class="fas fa-walking"></i></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal mb-30">
-                <div class="field-label is-normal">
-                    <label class="label">降車駅</label>
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                            <input class="input" type="text" placeholder="五反田">
-                            <span class="icon is-small is-left"><i class="fas fa-walking fa-flip-horizontal"></i></span>
-                        </p>
-                    </div>
-                </div>
-            </div> -->
-
         </div>
 
-        <div class="column is-8 is-offset-2 text-right">
+        <div class="column is-10 is-offset-1 text-right mb-20">
             <button type="submit" class="button is-primary">{{ __('新規登録') }}</button>
         </div>
-    </form>
-</div>
-
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        {{ Form::close() }}
     </div>
-</div> -->
+</div>
 @endsection

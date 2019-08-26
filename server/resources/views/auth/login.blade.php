@@ -13,7 +13,7 @@
             <div class="column is-10 is-offset-1">
                 <div class="field is-horizontal mb-30">
                     <div class="field-label is-normal">
-                        <label class="label">Eメール</label>
+                        <label class="label">メール</label>
                     </div>
                     <div class="field-body">
                         <div class="field">

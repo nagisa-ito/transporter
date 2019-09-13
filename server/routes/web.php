@@ -17,7 +17,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', 'HomeController@index')->name('home');
 
+// 認証
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// プロフィール確認、編集
+Route::get('profile/index', 'UserController@index');
+Route::get('profile/edit/{user}', 'UserController@edit');
+Route::post('profile/update', 'UserController@update');

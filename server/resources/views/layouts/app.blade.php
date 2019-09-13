@@ -41,16 +41,6 @@
                 <div class="navbar-start">
                     <a class="navbar-item" href="{{ url('/') }}">Home</a>
                     <a class="navbar-item">Documentation</a>
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">More</a>
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">About</a>
-                            <a class="navbar-item">Jobs</a>
-                            <a class="navbar-item">Contact</a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">Report an issue</a>
-                        </div>
-                    </div>
                 </div>
                 <div class="navbar-end">
 
@@ -59,22 +49,19 @@
                     @auth
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">{{ Auth::user()->first_name }}</a>
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">About</a>
-                            <a class="navbar-item">Jobs</a>
-                            <a class="navbar-item">Contact</a>
+                        <div class="navbar-dropdown is-right">
+                            <a class="navbar-item">プロフィール設定</a>
+                            <a class="navbar-item">定期登録</a>
+                            <a class="navbar-item">区間登録</a>
                             <hr class="navbar-divider">
-                            <a class="navbar-item">Report an issue</a>
+                            <a class="navbar-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('ログアウト') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
-                    </div>
-                    <div class="buttons">
-                        <a class="button is-light" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
                     </div>
                     @else
                     <div class="buttons">

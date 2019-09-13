@@ -13820,6 +13820,8 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
  */
 // Bootstrapは使用しない
 // require('./bootstrap');
+__webpack_require__(/*! ./common */ "./resources/js/common.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -13844,6 +13846,25 @@ files.keys().map(function (key) {
 
 var app = new Vue({
   el: '#app'
+});
+
+/***/ }),
+
+/***/ "./resources/js/common.js":
+/*!********************************!*\
+  !*** ./resources/js/common.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// .notification .delete ボタンクリックで削除
+document.addEventListener('DOMContentLoaded', function () {
+  (document.querySelectorAll('.notification .delete') || []).forEach(function ($delete) {
+    $notification = $delete.parentNode;
+    $delete.addEventListener('click', function () {
+      $notification.parentNode.removeChild($notification);
+    });
+  });
 });
 
 /***/ }),

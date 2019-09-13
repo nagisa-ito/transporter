@@ -5,6 +5,7 @@
  */
 // Bootstrapは使用しない
 // require('./bootstrap');
+require('./common');
 
 window.Vue = require('vue');
 

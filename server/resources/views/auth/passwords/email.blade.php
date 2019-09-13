@@ -10,8 +10,11 @@
     @endif
 
     <div class="column is-6 is-offset-3 box">
-        <div class="column mb-10">
-            <h4 class="title is-4">{{ __('パスワードリセット') }}</h4>
+        <div class="column mb-10 mt-20 text-center">
+            <h4 class="title is-4">{{ __('パスワードを忘れた場合') }}</h4>
+            <small class="subtitile">
+                パスワードをリセットします。<br>登録しているメールアドレスを入力してください。
+            </small>
         </div>
 
         <div class="column is-10 is-offset-1">
@@ -36,8 +39,11 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal mb-10">
-                    <button type="submit" class="button is-primary is-medium is-fullwidth">{{ __('Send Password Reset Link') }}</button>
+                <div class="field mb-10 text-center">
+                    <button type="submit" class="button is-primary is-fullwidth mb-10">
+                        {{ __('パスワード再設定用メール送信') }}
+                    </button>
+                    <small><b>上記メールアドレスに再設定用のURLを送信します。</b></small>
                 </div>
 
             {{ Form::close() }}

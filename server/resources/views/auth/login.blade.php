@@ -4,8 +4,8 @@
 @section('content')
 <div class="container">
     <div class="column is-6 is-offset-3 box">
-        <div class="column mb-10">
-            <h4 class="title is-4">{{ __('ログイン') }}</h4>
+        <div class="column mb-20 mt-20">
+            <h4 class="title is-4 text-center">{{ __('ログイン') }}</h4>
         </div>
 
         {{ Form::open() }}
@@ -51,7 +51,8 @@
 
                 <div class="field is-horizontal mb-20">
                     <label class="checkbox text-right" for="remember">
-                        <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                        <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <small>{{ __('ログインしたままにする') }}</small>
                     </label>
                 </div>
 
@@ -60,8 +61,10 @@
                 </div>
 
                 @if (Route::has('password.request'))
-                    <div class="field text-center mb-10">
-                        <a class="text-center" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+                    <div class="field text-center mb-20">
+                        <a class="text-center" href="{{ route('password.request') }}">
+                            <small>{{ __('パスワードを忘れましたか?') }}</small>
+                        </a>
                     </div>
                 @endif
             </div>

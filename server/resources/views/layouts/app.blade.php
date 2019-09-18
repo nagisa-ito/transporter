@@ -50,7 +50,7 @@
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">{{ Auth::user()->first_name }}</a>
                         <div class="navbar-dropdown is-right">
-                            <a class="navbar-item">プロフィール設定</a>
+                            <a class="navbar-item" href="{{ url('profile/edit') }}">プロフィール設定</a>
                             <a class="navbar-item">定期登録</a>
                             <a class="navbar-item">区間登録</a>
                             <hr class="navbar-divider">

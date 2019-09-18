@@ -24,5 +24,5 @@ Auth::routes();
 
 // プロフィール確認、編集
 Route::get('profile/index', 'UserController@index');
-Route::get('profile/edit/{user}', 'UserController@edit');
+Route::get('profile/edit', 'UserController@edit');
 Route::post('profile/update', 'UserController@update');

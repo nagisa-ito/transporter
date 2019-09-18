@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-// TIPS: このコントローラーで使用したいモデルがあれば随時追加をしていく
 use App\Models\User;
 use App\Models\Department;
 
@@ -20,6 +21,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -68,9 +70,23 @@ class UserController extends Controller
     public function update(Request $request)
     {
         try {
+            // 更新時バリデーション
+            $validation = User::validator($request->all());
+            if ($validation->fails()) {
+                return redirect('profile/edit')
+                    ->withErrors($validation)
+                    ->withInput();
+            }
+
+            // TODO: パスワードの変更は分離したい その時は$request->all()で省略可能
             $user = user::find($request->id);
-            $user->fill($request->all())->save();
-            $user->save();
+            $user->fill([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'department_id' => $request->department_id,
+            ])->save();
         } catch (Exception $e) {
             return redirect('profile/edit')->with([
                 'status' => 'プロフィールの編集に失敗しました。',

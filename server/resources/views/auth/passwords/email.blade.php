@@ -20,10 +20,8 @@
         <div class="column is-10 is-offset-1">
             {{ Form::open(['route' => 'password.email']) }}
                 @csrf
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">メール</label>
-                    </div>
+                <div class="field mb-30">
+                    <label class="label">メールアドレス</label>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -40,8 +38,8 @@
                 </div>
 
                 <div class="field mb-10 text-center">
-                    <button type="submit" class="button is-primary is-fullwidth mb-10">
-                        {{ __('パスワード再設定用メール送信') }}
+                    <button type="submit" class="button is-primary is-fullwidth mb-10 is-medium">
+                        <strong>{{ __('Send') }}</strong>
                     </button>
                     <small><b>上記メールアドレスに再設定用のURLを送信します。</b></small>
                 </div>

@@ -106,7 +106,9 @@
                 </div>
 
                 <div class="field is-horizontal mb-10">
-                    <button type="submit" class="button is-primary is-fullwidth is-medium">{{ __('Sign up') }}</button>
+                    <button type="submit" class="button is-primary is-fullwidth is-medium">
+                        <strong>{{ __('Sign up') }}</strong>
+                    </button>
                 </div>
 
                 <div class="field text-center mb-10">

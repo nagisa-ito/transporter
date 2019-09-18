@@ -53,7 +53,9 @@
                 </div>
 
                 <div class="field is-horizontal mb-10">
-                    <button type="submit" class="button is-primary is-medium is-fullwidth">{{ __('Log in') }}</button>
+                    <button type="submit" class="button is-primary is-medium is-fullwidth">
+                        <strong>{{ __('Log in') }}</strong>
+                    </button>
                 </div>
 
                 @if (Route::has('password.request'))

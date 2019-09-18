@@ -67,17 +67,20 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        // TODO:
-        // バリデーション、失敗時のフラッシュ
-        // 直リンクでログインしなくてもページ移動できちゃう
-        $user = user::find($request->id);
-        $user->last_name     = $request->last_name;
-        $user->first_name    = $request->first_name;
-        $user->password      = Hash::make($request->password);
-        $user->department_id = $request->department_id;
-        $user->enable        = $request->enable;
-        $user->save();
+        try {
+            $user = user::find($request->id);
+            $user->fill($request->all())->save();
+            $user->save();
+        } catch (Exception $e) {
+            return redirect('profile/edit')->with([
+                'status' => 'プロフィールの編集に失敗しました。',
+                'class' => 'notification is-danger'
+            ]);
+        }
 
-        return redirect("profile/edit/{$request->id}")->with('status', 'プロフィールの編集に成功しました。');
+        return redirect('profile/edit')->with([
+            'status' => 'プロフィールの編集に成功しました。',
+            'class' => 'notification is-primary'
+        ]);
     }
 }

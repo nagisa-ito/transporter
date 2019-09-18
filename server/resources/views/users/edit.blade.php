@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     @if (session('status'))
-        <div class="notification is-primary">
+        <div class="{{ session('class') }}">
             <button class="delete"></button>
             {{ session('status') }}
         </div>
@@ -21,10 +21,8 @@
             {{ Form::hidden('id', $user->id) }}
             {{ Form::hidden('enable', $user->enable) }}
             <div class="column is-10 is-offset-1">
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">メール</label>
-                    </div>
+                <div class="field mb-30">
+                    <label class="label">メールアドレス</label>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -40,10 +38,8 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">パスワード</label>
-                    </div>
+                <div class="field">
+                    <label class="label">パスワード</label>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -59,10 +55,7 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <!-- Left empty for spacing -->
-                    </div>
+                <div class="field mb-30">
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -74,10 +67,8 @@
                     </div>
                 </div>
 
+                <label class="label">名前</label>
                 <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">姓</label>
-                    </div>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -90,14 +81,6 @@
                                 @enderror
                             </p>
                         </div>
-                    </div>
-                </div>
-
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">名</label>
-                    </div>
-                    <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
                                 <input id="first_name" type="text" class="input @error('name') is-danger @enderror" value="{{ $user->first_name }}"
@@ -112,10 +95,8 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">部署</label>
-                    </div>
+                <div class="field mb-30">
+                    <label class="label">部署</label>
                     <div class="field-body">
                         <div class="field">
                             <div class="select">

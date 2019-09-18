@@ -83,6 +83,8 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $departments = Department::all();
+        $departments = $departments->pluck('name', 'id');
+
         return view('auth.register', compact('departments'));
     }
 }

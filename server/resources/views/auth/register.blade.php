@@ -1,20 +1,26 @@
 @extends('layouts.app')
 
 @section('title', 'register')
-@section('content')
-<div class="container">
-    <div class="column is-6 is-offset-3 box">
-        <div class="column mb-20 mt-20 text-center">
-            <h4 class="title is-4">{{ __('新規登録') }}</h4>
-        </div>
 
-        {{ Form::open() }}
-            @csrf
+@section('content')
+<div class="container mb-30">
+    @if (session('status'))
+        <div class="notification is-primary">
+            <button class="delete"></button>
+            {{ session('status') }}
+        </div>
+    @endif
+
+    {{ Form::open() }}
+        @csrf
+        <div class="column is-6 is-offset-3 box">
             <div class="column is-10 is-offset-1">
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">メール</label>
-                    </div>
+                <div class="column mb-10 text-center">
+                    <h4 class="title is-4">{{ __('新規登録') }}</h4>
+                </div>
+
+                <div class="field mb-30">
+                    <label class="label">メールアドレス</label>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -30,10 +36,8 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">パスワード</label>
-                    </div>
+                <div class="field">
+                    <label class="label">パスワード</label>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -49,10 +53,7 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <!-- Left empty for spacing -->
-                    </div>
+                <div class="field mb-30">
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -64,10 +65,9 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">姓</label>
-                    </div>
+                <label class="label">名前</label>
+                <div class="field mb-30 is-horizontal">
+                    
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -80,14 +80,6 @@
                                 @enderror
                             </p>
                         </div>
-                    </div>
-                </div>
-
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">名</label>
-                    </div>
-                    <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
                                 <input id="first_name" type="text" class="input @error('name') is-danger @enderror"
@@ -102,18 +94,12 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">部署</label>
-                    </div>
+                <div class="field mb-30">
+                    <label class="label">部署</label>
                     <div class="field-body">
                         <div class="field">
                             <div class="select">
-                                <select name="department_id">
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department['id'] }}">{{ $department['name'] }}</option>
-                                    @endforeach
-                                </select>
+                                {{ Form::select('department_id', $departments) }}
                             </div>
                         </div>
                     </div>
@@ -123,13 +109,13 @@
                     <button type="submit" class="button is-primary is-fullwidth is-medium">{{ __('Sign up') }}</button>
                 </div>
 
-                <div class="field text-center mb-20">
+                <div class="field text-center mb-10">
                     <a class="text-center" href="{{ route('login') }}">
                         <small>{{ __('ログインはこちらから') }}</small>
                     </a>
                 </div>
             </div>
-        {{ Form::close() }}
-    </div>
+        </div>
+    {{ Form::close() }}
 </div>
 @endsection

@@ -11,10 +11,8 @@
         {{ Form::open() }}
             @csrf
             <div class="column is-10 is-offset-1">
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">メール</label>
-                    </div>
+                <div class="field mb-30">
+                    <label class="label">メールアドレス</label>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">
@@ -30,10 +28,8 @@
                     </div>
                 </div>
 
-                <div class="field is-horizontal mb-30">
-                    <div class="field-label is-normal">
-                        <label class="label">パスワード</label>
-                    </div>
+                <div class="field mb-30">
+                    <label class="label">パスワード</label>
                     <div class="field-body">
                         <div class="field">
                             <p class="control is-expanded has-icons-left">

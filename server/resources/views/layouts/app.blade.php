@@ -21,64 +21,17 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    @include('layouts.header')
+
     {{-- app以下でVueが有効になっている --}}
-    <div id="app">
-        {{-- TODO: ヘッダーは別ファイルに --}}
-        <nav class="navbar has-shadow mb-20" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="https://bulma.io">
-                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-                </a>
+    <div id="app" class="columns is-gapless" style="height: calc(100vh - 56px);">
+        <div class="column is-2">
+            @include('layouts.sidebar')
+        </div>
 
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                </a>
-            </div>
-
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item" href="{{ url('/') }}">Home</a>
-                    <a class="navbar-item">Documentation</a>
-                </div>
-                <div class="navbar-end">
-
-                <div class="navbar-item">
-                    {{-- ユーザーが認証されているか --}}
-                    @auth
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">{{ Auth::user()->first_name }}</a>
-                        <div class="navbar-dropdown is-right">
-                            <a class="navbar-item" href="{{ url('sections/index') }}">定期設定</a>
-                            <a class="navbar-item">区間登録</a>
-                            <a class="navbar-item" href="{{ url('profile/edit') }}">個人設定</a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('ログアウト') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </div>
-                    @else
-                    <div class="buttons">
-                        <a class="button is-primary" href="{{ route('register') }}">
-                            <strong>{{ __('Sign up') }}</strong>
-                        </a>
-                        <a class="button is-light" href="{{ route('login') }}">{{ __('Log in') }}</a>
-                    </div>
-                    @endauth
-                </div>
-            </div>
-        </nav>
-
-        <main>
+        <div class="column is-10">
             @yield('content')
-        </main>
-
+        </div>
     </div>
 </body>
 </html>

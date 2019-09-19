@@ -47,9 +47,6 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit()
     {
@@ -61,41 +58,87 @@ class UserController extends Controller
     }
 
     /**
+     * Show the form for editing password the specified resource.
+     */
+    public function edit_password()
+    {
+        $user = Auth::user();
+        return view('users.edit_password', compact('user'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        try {
-            // 更新時バリデーション
-            $validation = User::validator($request->all());
-            if ($validation->fails()) {
-                return redirect('profile/edit')
-                    ->withErrors($validation)
-                    ->withInput();
-            }
+        // 更新時バリデーション
+        $validation = Validator::make($request->all(), [
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                // update時に自分自身のemailはunique出ないことを許可する
+                Rule::unique('users')->ignore(Auth::id()),
+            ],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name'  => ['required', 'string', 'max:255'],
+        ]);
 
-            // TODO: パスワードの変更は分離したい その時は$request->all()で省略可能
+        try {
+            if ($validation->fails()) {
+                return redirect('profile/edit')->withErrors($validation)->withInput();
+            }
             $user = user::find($request->id);
-            $user->fill([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'department_id' => $request->department_id,
-            ])->save();
+            $user->fill($request->all())->save();
         } catch (Exception $e) {
             return redirect('profile/edit')->with([
-                'status' => 'プロフィールの編集に失敗しました。',
+                'status' => 'プロフィールの更新に失敗しました。',
                 'class' => 'notification is-danger'
             ]);
         }
 
         return redirect('profile/edit')->with([
-            'status' => 'プロフィールの編集に成功しました。',
+            'status' => 'プロフィールの更新に成功しました。',
+            'class' => 'notification is-primary'
+        ]);
+    }
+
+    /**
+     * Update Password the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update_password(Request $request)
+    {
+        // 更新時バリデーション
+        $validation = Validator::make($request->all(), [
+            'password'   => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        try {
+            if ($validation->fails()) {
+                return redirect('profile/edit_password')->withErrors($validation)->withInput();
+            }
+
+            $user = Auth::user();
+            $user->fill([
+                'password' => Hash::make($request->password),
+            ])->save();
+        } catch (Exception $e) {
+            return redirect('profile/edit_password')->with([
+                'status' => 'パスワードの更新に失敗しました。',
+                'class' => 'notification is-danger'
+            ]);
+        }
+
+        // 成功時
+        return redirect('profile/edit_password')->with([
+            'status' => 'パスワードの更新に成功しました。',
             'class' => 'notification is-primary'
         ]);
     }

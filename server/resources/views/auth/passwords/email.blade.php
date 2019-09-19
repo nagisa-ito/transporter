@@ -20,7 +20,7 @@
         <div class="column is-10 is-offset-1">
             {{ Form::open(['route' => 'password.email']) }}
                 @csrf
-                <div class="field mb-30">
+                <div class="field mb-20">
                     <label class="label">メールアドレス</label>
                     <div class="field-body">
                         <div class="field">
@@ -37,11 +37,14 @@
                     </div>
                 </div>
 
+                <div class="text-center mb-20">
+                    <small><b>上記メールアドレスに再設定用のURLを送信します。</b></small>
+                </div>
+
                 <div class="field mb-10 text-center">
                     <button type="submit" class="button is-primary is-fullwidth mb-10 is-medium">
                         <strong>{{ __('Send') }}</strong>
                     </button>
-                    <small><b>上記メールアドレスに再設定用のURLを送信します。</b></small>
                 </div>
 
             {{ Form::close() }}

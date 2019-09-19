@@ -51,9 +51,6 @@
             </div>
 
             <div class="field is-horizontal mb-30">
-                <div class="field-label is-normal">
-                    <!-- Left empty for spacing -->
-                </div>
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
@@ -66,7 +63,9 @@
             </div>
 
             <div class="field is-horizontal mb-30">
-                <button type="submit" class="button is-primary is-fullwidth">{{ __('パスワードをリセットする') }}</button>
+                <button type="submit" class="button is-primary is-fullwidth is-medium">
+                    <strong>{{ __('Reset Password') }}</strong>
+                </button>
             </div>
 
         {{ Form::close() }}

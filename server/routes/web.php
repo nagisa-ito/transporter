@@ -26,3 +26,6 @@ Auth::routes();
 Route::get('profile/index', 'UserController@index');
 Route::get('profile/edit', 'UserController@edit');
 Route::post('profile/update', 'UserController@update');
+Route::get('profile/edit_password', 'UserController@edit_password');
+Route::post('profile/update_password', 'UserController@update_password');
+

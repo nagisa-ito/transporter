@@ -25,7 +25,10 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::where('user_id', Auth::id())->get();
+        $sections = Section::where([
+            'user_id' => Auth::id(),
+            'is_delete' => false,
+        ])->get();
         return view('sections.index', compact('sections'));
     }
 
@@ -47,7 +50,6 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         $validation = Section::validator($request->all());
 
         try {
@@ -112,6 +114,20 @@ class SectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $section = Section::find($id);
+            $section->is_delete = true;
+            $section->save();
+        } catch (Exception $e) {
+            return redirect('sections')->with([
+                'status' => '定期の削除に失敗しました。',
+                'class' => 'notification is-danger'
+            ]);
+        }
+
+        return redirect('sections')->with([
+            'status' => '定期の削除に成功しました。',
+            'class' => 'notification is-primary'
+        ]);
     }
 }

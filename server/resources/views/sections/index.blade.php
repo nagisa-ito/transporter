@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="{{ asset('css/section.css') }}">
 @endpush
 
+@push('scripts')
+@endpush
+
 @section('content')
 <div class="container p-20">
     <h5 class="title is-5">定期一覧</h5>
@@ -18,10 +21,11 @@
     @endif
 
     <div class="notification is-light">
-        <!-- TODO: 文言変える -->
-        定期の登録をします。<br>
+        定期の一覧を確認します。<br>
         <strong>定期券が複数ある場合は複数登録することができます。</strong><br>
         (例: 東急東横線(横浜〜渋谷)→JR(渋谷〜五反田)の場合は、東急とJRの定期を分けて登録します。)<br><br>
+
+        <!-- TODO: 定期自動更新機能 -->
         <strong>自動申請をONにすることで、定期の申請月(1月, 4月, 7月, 10月)に自動的に定期を申請します。</strong>
     </div>
 
@@ -49,11 +53,16 @@
                         <div class="passport-decor" style="top: 0; left:0;">
                         </div>
                     </div>
-
                 </div>
                 <footer class="card-footer">
-                    <a href="#" class="card-footer-item">Edit</a>
-                    <a href="#" class="card-footer-item">Delete</a>
+                    <a href="#" class="card-footer-item"><i class="fas fa-edit"></i></a>
+
+                    {{-- 削除 --}}
+                    @component('components.delete-link')
+                        @slot('table', 'sections')
+                        @slot('id', $section->id)
+                        @slot('name', $section->name)
+                    @endcomponent
                 </footer>
             </div>
         </div>

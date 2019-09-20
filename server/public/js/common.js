@@ -7,3 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+function confirmDelete(target)
+{
+    let message = `「${target}」を削除してもよろしいですか？`;
+    return confirm(message);
+}

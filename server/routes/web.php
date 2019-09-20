@@ -29,3 +29,5 @@ Route::post('profile/update', 'UserController@update');
 Route::get('profile/edit_password', 'UserController@edit_password');
 Route::post('profile/update_password', 'UserController@update_password');
 
+// 定期、登録区間
+Route::resource('sections', 'SectionController');

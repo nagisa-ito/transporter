@@ -19,19 +19,24 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('css')
 </head>
 <body>
     @include('layouts.header')
 
     {{-- app以下でVueが有効になっている --}}
     <div id="app" class="columns is-gapless" style="height: calc(100vh - 56px);">
-        <div class="column is-2">
-            @include('layouts.sidebar')
-        </div>
-
-        <div class="column is-10">
-            @yield('content')
-        </div>
+        @auth
+            {{-- ログイン済みの場合サイドバーを表示する --}}
+            <div class="column is-2">
+                @include('layouts.sidebar')
+            </div>
+            <div class="column is-10" style="overflow-y: scroll;">
+        @else
+            <div class="column mt-30">
+        @endauth
+                @yield('content')
+            </div>
     </div>
 </body>
 </html>

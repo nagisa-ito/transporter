@@ -43,7 +43,7 @@
 
                 <div class="field mb-10 text-center">
                     <button type="submit" class="button is-primary is-fullwidth mb-10 is-medium">
-                        <strong>{{ __('Send') }}</strong>
+                        <strong>{{ __('メールを送信') }}</strong>
                     </button>
                 </div>
 

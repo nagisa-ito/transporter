@@ -37,7 +37,18 @@
         @else
             <div class="column mt-30">
         @endauth
-                @yield('content')
+                <div class="container p-20">
+                    <h5 class="title is-5">@yield('page-title')</h5>
+
+                    @if (session('status'))
+                        <div class="{{ session('class') }}">
+                            <button class="delete"></button>
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    @yield('content')
+                </div>
             </div>
     </div>
 </body>

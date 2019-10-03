@@ -107,7 +107,7 @@
 
                 <div class="field is-horizontal mb-10">
                     <button type="submit" class="button is-primary is-fullwidth is-medium">
-                        <strong>{{ __('Sign up') }}</strong>
+                        <strong>{{ __('新規登録') }}</strong>
                     </button>
                 </div>
 

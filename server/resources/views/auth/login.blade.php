@@ -54,7 +54,7 @@
 
                 <div class="field is-horizontal mb-10">
                     <button type="submit" class="button is-primary is-medium is-fullwidth">
-                        <strong>{{ __('Log in') }}</strong>
+                        <strong>{{ __('ログイン') }}</strong>
                     </button>
                 </div>
 

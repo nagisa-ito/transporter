@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <footer class="card-footer">
-                    <a href="#" class="card-footer-item"><i class="fas fa-edit"></i></a>
+                    <a href="{{ url('sections/' . $section->id . '/edit') }}" class="card-footer-item"><i class="fas fa-edit"></i></a>
 
                     {{-- 削除 --}}
                     @component('components.delete-link')

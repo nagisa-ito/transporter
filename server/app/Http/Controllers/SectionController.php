@@ -91,7 +91,8 @@ class SectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $section = Section::find($id);
+        return view('sections.edit', ['section' => $section]);
     }
 
     /**
@@ -103,7 +104,26 @@ class SectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validation = Section::validator($request->all());
+
+        try {
+            if ($validation->fails()) {
+                return redirect('sections/edit')->withErrors($validation)->withInput();
+            }
+
+            $section = Section::find($id);
+            $section->fill($request->all())->save();
+        } catch (Exception $e) {
+            return redirect('sections/edit')->with([
+                'status' => '定期の更新に失敗しました。',
+                'class' => 'notification is-danger'
+            ]);
+        }
+
+        return redirect('sections')->with([
+            'status' => '定期の更新に成功しました。',
+            'class' => 'notification is-primary'
+        ]);
     }
 
     /**

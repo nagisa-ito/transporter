@@ -24,8 +24,8 @@
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">{{ Auth::user()->first_name }}</a>
                 <div class="navbar-dropdown is-right">
-                    <a class="navbar-item" href="{{ url('sections') }}">定期設定</a>
-                    <a class="navbar-item">区間登録</a>
+                    <a class="navbar-item" href="{{ url('sections/1') }}">定期設定</a>
+                    <a class="navbar-item" href="{{ url('sections/0') }}">お気に入り区間設定</a>
                     <a class="navbar-item" href="{{ url('profile/edit') }}">プロフィール設定</a>
                     <a class="navbar-item" href="{{ url('profile/edit_password') }}">パスワード設定</a>
                     <hr class="navbar-divider">

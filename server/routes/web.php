@@ -30,4 +30,6 @@ Route::get('profile/edit_password', 'UserController@edit_password');
 Route::post('profile/update_password', 'UserController@update_password');
 
 // 定期、登録区間
-Route::resource('sections', 'SectionController');
+Route::resource('sections', 'SectionController', ['only' => ['store', 'edit', 'update', 'destroy']]);
+Route::get('sections/{is_regular}', 'SectionController@index');
+Route::get('sections/create/{is_regular}', 'SectionController@create');

@@ -2,13 +2,13 @@
     Form::open([
         'method' => 'DELETE',
         'route' => ["{$table}.destroy", $id],
-        'class' => 'card-footer-item',
+        'class' => $div,
         'onsubmit' => "return confirmDelete('{$name}')"
     ])
 }}
     @csrf
     @method('DELETE')
-    <button type="submit" class="button is-link is-inverted">
+    <button type="submit" class="{{ $class }}">
         <i class="fas fa-trash-alt"></i>
     </button>
 {{ Form::close() }}

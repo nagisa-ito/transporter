@@ -33,12 +33,12 @@
             <div class="column is-2">
                 @include('layouts.sidebar')
             </div>
-            <div class="column is-10" style="overflow-y: scroll;">
+            <div class="column is-10" style="overflow-y: auto;">
         @else
             <div class="column mt-30">
         @endauth
                 <div class="container p-20">
-                    <h5 class="title is-5">@yield('page-title')</h5>
+                    <h5 class="title is-5"><span class="has-text-link ">#</span> @yield('page-title')</h5>
 
                     @if (session('status'))
                         <div class="{{ session('class') }}">

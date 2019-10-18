@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+
 // TIPS: このコントローラーで使用したいモデルがあれば随時追加をしていく
 use App\Models\RequestDetail;
 
-class RequestDetailsController extends Controller
+class RequestDetailController extends Controller
 {
     /**
      * 一覧表示
@@ -17,10 +23,10 @@ class RequestDetailsController extends Controller
      */
     public function index()
     {
-        // TODO: 特定のユーザーの一覧表示をするようにする
-        // セッション？認証情報からuser_idを持ってくる adminユーザーは別の処理が必要
+        // user_idを持ってくる adminユーザーは別の処理が必要
         // TODO: yyyymmの指定もここでする
-        $user_id = 2;
+        \Log::info(Auth::user());
+        $user_id = Auth::id();
         $request_details = RequestDetail::where('user_id', $user_id)->get();
         return $request_details;
     }

@@ -11,10 +11,18 @@
 @section('page-title', 'yyyy年mm月分')
 
 @section('content')
-<button class="button is-success">
-    <span class="icon"><i class="fas fa-check"></i></span>
-    <span><strong>確定する</strong></span>
-</button>
+<article class="message">
+    <div class="message-body">
+        <small>
+            <strong>【提出期限】翌月3日 (3日が休日の場合、1営業日前)</strong><br><br>
+            【注意】<br>
+            提出期限厳守でお願いいたします。<br>
+            特に年度末(12月分清算)は次月清算ができませんので、その分の交通費がお支払いできなくなる場合があります。<br>
+            その他、提出期限が変わる場合がありますので都度チャットワークをご確認ください。
+        </small>
+    </div>
+</article>
+
 <hr>
 <nav class="level">
     <a class="button">
@@ -24,19 +32,19 @@
     </a>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">total</p>
+            <p class="heading">合計</p>
             <p class="title">13,456</p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">count</p>
+            <p class="heading">件数</p>
             <p class="title">12</p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">checked</p>
+            <p class="heading">確定</p>
             <p class="title">
                 <span class="icon has-text-danger"><i class="fas fa-times"></i></span>
             </p>
@@ -49,12 +57,6 @@
     </a>
 </nav>
 <hr>
-<!-- <p class="buttons is-right">
-<a class="button is-link is-outlined">
-    <span class="icon"><i class="fas fa-arrow-right"></i></span>
-    <span>申請一覧</span>
-</a>
-</p> -->
 
 <div class="box">
     <div class="columns">
@@ -70,6 +72,10 @@
                 <button class="button is-success">
                     <span class="icon"><i class="fas fa-plus"></i></span>
                     <span><strong>追加</strong></span>
+                </button>
+                <button class="button is-success">
+                    <span class="icon"><i class="fas fa-check"></i></span>
+                    <span><strong>確定する</strong></span>
                 </button>
             </div>
         </div>

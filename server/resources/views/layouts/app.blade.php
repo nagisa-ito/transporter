@@ -38,7 +38,7 @@
             <div class="column mt-30">
         @endauth
                 <div class="container p-20">
-                    <h5 class="title is-5"><span class="has-text-link ">#</span> @yield('page-title')</h5>
+                    <h5 class="title is-5"><span class="has-text-link">#</span> @yield('page-title')</h5>
 
                     @if (session('status'))
                         <div class="{{ session('class') }}">

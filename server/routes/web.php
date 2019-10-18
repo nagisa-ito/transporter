@@ -17,7 +17,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'RequestDetailController@show')->name('home');
 
 // 認証
 Auth::routes();
@@ -29,7 +29,10 @@ Route::post('profile/update', 'UserController@update');
 Route::get('profile/edit_password', 'UserController@edit_password');
 Route::post('profile/update_password', 'UserController@update_password');
 
-// 定期、登録区間
+// 定期、お気に入り区間
 Route::resource('sections', 'SectionController', ['only' => ['store', 'edit', 'update', 'destroy']]);
 Route::get('sections/{is_regular}', 'SectionController@index');
 Route::get('sections/create/{is_regular}', 'SectionController@create');
+
+// 申請
+Route::get('api/request_details', 'RequestDetailController@index');

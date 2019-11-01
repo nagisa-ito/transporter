@@ -29,6 +29,11 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import Buefy from 'buefy'
+
+Vue.use(Buefy, {
+    defaultIconPack: 'fas',
+});
 
 const app = new Vue({
     el: '#app',

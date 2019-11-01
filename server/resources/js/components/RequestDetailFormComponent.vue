@@ -1,17 +1,11 @@
 <template>
     <div>
-        <div class="field">
-            <!-- TODO: bulma-datepickerを導入 -->
-            <label class="label">日付</label>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control is-expanded has-icons-left">
-                        <input class="input" name="date" required placeholder="yyyy-mm-dd">
-                        <span class="icon is-small is-left"><i class="fas fa-calendar-alt"></i></span>
-                    </p>
-                </div>
-            </div>
-        </div>
+        <b-field label="日付">
+            <b-datepicker
+                placeholder="yyyy-mm-dd"
+                icon="calendar-alt">
+            </b-datepicker>
+        </b-field>
 
         <div class="columns">
             <div class="column is-4">

@@ -60,7 +60,7 @@
                     <span class="icon"><i class="far fa-file-excel"></i></span>
                     <span>Excel</span>
                 </button>
-                <button class="button is-success" @click="show_modal = true">
+                <button class="button is-success" @click="showModal = true">
                     <span class="icon"><i class="fas fa-plus"></i></span>
                     <span><strong>追加</strong></span>
                 </button>
@@ -118,24 +118,8 @@
             </table>
         </div>
 
-        <transition name="slide-fade">
-        <div class="modal is-active" v-show="show_modal">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title"><small>申請を追加</small></p>
-                    <button class="delete" aria-label="close" @click="show_modal = false"></button>
-                </header>
-                <section class="modal-card-body">
-                    <request-detail-form-component></request-detail-form-component>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success" @click="show_modal = false"><strong>保存する</strong></button>
-                    <button class="button" @click="show_modal = false">キャンセル</button>
-                </footer>
-            </div>
-        </div>
-        </transition>
+        <!-- 申請追加モーダル -->
+        <request-detail-form-component :show-modal="showModal"></request-detail-form-component>
 
     </div>
 </template>
@@ -146,7 +130,8 @@ const num_formatter = new Intl.NumberFormat('ja-JP');
 export default {
     data: function() {
         return {
-            show_modal: false,
+            // propsは親コンポーネントではキャメルケース
+            showModal: false,
             year_month: '2019/10',
             total_cost: num_formatter.format(12304),
             count: num_formatter.format(12),
@@ -163,17 +148,3 @@ export default {
     },
 }
 </script>
-
-<style>
-.slide-fade-enter-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);;
-}
-.slide-fade-leave-active {
-  transition: all .3s ease;
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(-5px);
-  opacity: 0;
-}
-</style>

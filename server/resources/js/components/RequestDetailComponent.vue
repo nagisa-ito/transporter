@@ -60,7 +60,7 @@
                     <span class="icon"><i class="far fa-file-excel"></i></span>
                     <span>Excel</span>
                 </button>
-                <button class="button is-success" @click="showModal = true">
+                <button class="button is-success" @click="openModal()">
                     <span class="icon"><i class="fas fa-plus"></i></span>
                     <span><strong>追加</strong></span>
                 </button>
@@ -119,7 +119,9 @@
         </div>
 
         <!-- 申請追加モーダル -->
-        <request-detail-form-component :show-modal="showModal"></request-detail-form-component>
+        <transition name="slide-fade">
+            <request-detail-form-component v-show="show_modal"></request-detail-form-component>
+        </transition>
 
     </div>
 </template>
@@ -130,8 +132,7 @@ const num_formatter = new Intl.NumberFormat('ja-JP');
 export default {
     data: function() {
         return {
-            // propsは親コンポーネントではキャメルケース
-            showModal: false,
+            show_modal: false,
             year_month: '2019/10',
             total_cost: num_formatter.format(12304),
             count: num_formatter.format(12),
@@ -146,5 +147,27 @@ export default {
             this.request_details = res.data
         })
     },
+    methods: {
+        openModal: function () {
+            this.show_modal = true
+        },
+        closeModal: function () {
+            this.show_modal = false
+        }
+    }
 }
 </script>
+
+<style>
+.slide-fade-enter-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);;
+}
+.slide-fade-leave-active {
+  transition: all .3s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-5px);
+  opacity: 0;
+}
+</style>

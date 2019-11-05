@@ -30,6 +30,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import Buefy from 'buefy'
+import Datepicker from 'vuejs-datepicker';
 
 Vue.use(Buefy, {
     defaultIconPack: 'fas',
@@ -37,4 +38,7 @@ Vue.use(Buefy, {
 
 const app = new Vue({
     el: '#app',
+    components: {
+        Datepicker
+    },
 });

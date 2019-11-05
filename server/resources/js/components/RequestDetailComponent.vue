@@ -143,11 +143,7 @@
 <script>
 const num_formatter = new Intl.NumberFormat('ja-JP');
 
-import Datepicker from 'vuejs-datepicker';
 export default {
-    components: {
-        Datepicker
-    },
     data: function() {
         return {
             show_modal: false,
@@ -165,9 +161,6 @@ export default {
             this.request_details = res.data
         })
     },
-    methods: {
-
-    }
 }
 </script>
 

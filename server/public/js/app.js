@@ -1871,7 +1871,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 //
 //
 //
@@ -2015,11 +2014,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var num_formatter = new Intl.NumberFormat('ja-JP');
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
   data: function data() {
     return {
       show_modal: false,
@@ -2036,8 +2031,7 @@ var num_formatter = new Intl.NumberFormat('ja-JP');
     Axios.get('api/request_details').then(function (res) {
       _this.request_details = res.data;
     });
-  },
-  methods: {}
+  }
 });
 
 /***/ }),
@@ -31884,6 +31878,7 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var buefy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! buefy */ "./node_modules/buefy/dist/esm/index.js");
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -31916,11 +31911,15 @@ files.keys().map(function (key) {
  */
 
 
+
 Vue.use(buefy__WEBPACK_IMPORTED_MODULE_0__["default"], {
   defaultIconPack: 'fas'
 });
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
 });
 
 /***/ }),

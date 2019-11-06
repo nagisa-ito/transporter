@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 use App\Models\RequestDetail;
-use App\Models\Department;
+use App\Models\RequestDetailType;
+use App\Models\Transportation;
 
 class RequestDetailController extends Controller
 {
@@ -31,7 +32,9 @@ class RequestDetailController extends Controller
      */
     public function show()
     {
-        return view('request_details.show');
+        $transportations = Transportation::all();
+        $types = RequestDetailType::all();
+        return view('request_details.show', compact('transportations', 'types'));
     }
 
     /**
@@ -46,5 +49,16 @@ class RequestDetailController extends Controller
         $user_id = Auth::id();
         $request_details = RequestDetail::where('user_id', $user_id)->where('is_delete', false)->get();
         return $request_details;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return '通信できました';
     }
 }

@@ -141,6 +141,7 @@ export default {
             }
         }
     },
+    props: ['transportations', 'types'],
     created: function() {
         Axios.get('api/request_details')
         .then(res => {

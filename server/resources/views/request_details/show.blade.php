@@ -11,5 +11,8 @@
 @section('page-title', '申請一覧')
 
 @section('content')
-    <request-detail-component></request-detail-component>
+    <request-detail-component
+        :types="{{ $types }}"
+        :transportations="{{ $transportations }}">
+    </request-detail-component>
 @endsection

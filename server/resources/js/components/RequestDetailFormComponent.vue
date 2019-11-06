@@ -15,22 +15,22 @@
                         <b-datepicker
                             placeholder="yyyy-mm-dd"
                             icon="calendar-alt"
+                            :date-formatter="(date) => date.toLocaleDateString()"
                             v-model="form.date">
                         </b-datepicker>
                     </b-field>
 
                     <div class="columns">
                         <div class="column is-4">
-                            <!-- TODO: optionをDBから持ってくる -->
                             <div class="field">
                                 <label class="label">分類</label>
                                 <div class="field-body">
                                     <div class="field">
                                         <div class="select is-fullwidth">
                                             <select v-model="form.type">
-                                                <option>通勤費</option>
-                                                <option>定期代</option>
-                                                <option>営業交通費</option>
+                                                <option v-for="type in $parent.types" :value="type.id">
+                                                    {{ type.name }}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -45,10 +45,9 @@
                                     <div class="field">
                                         <div class="select is-fullwidth">
                                             <select v-model="form.transportation_id">
-                                                <option>電車</option>
-                                                <option>バス</option>
-                                                <option>タクシー</option>
-                                                <option>飛行機</option>
+                                                <option v-for="transportation in $parent.transportations" :value="transportation.id">
+                                                    {{ transportation.name }}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -63,8 +62,8 @@
                                     <div class="field">
                                         <div class="select is-fullwidth">
                                             <select v-model="form.is_oneway">
-                                                <option>往復</option>
-                                                <option>片道</option>
+                                                <option value="0">往復</option>
+                                                <option value="1">片道</option>
                                             </select>
                                         </div>
                                     </div>
@@ -86,18 +85,17 @@
                     </div>
 
                     <div class="field">
-                        <!-- TODO: bulma-datepickerを導入 -->
                         <label class="label">利用区間</label>
                         <div class="field-body">
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    <input v-model="form.from" class="input" type="txt" required placeholder="乗車駅">
+                                    <input v-model="form.from" class="input" type="text" required placeholder="乗車駅">
                                     <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
                                 </p>
                             </div>
                             <div class="field">
                                 <p class="control is-expanded has-icons-left">
-                                    <input v-model="form.to" class="input" type="txt" required placeholder="降車駅">
+                                    <input v-model="form.to" class="input" type="text" required placeholder="降車駅">
                                     <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
                                 </p>
                             </div>
@@ -107,10 +105,13 @@
                     <div class="field">
                         <label class="label">費用</label>
                         <div class="field-body">
-                            <div class="field">
+                            <div class="field has-addons">
                                 <p class="control is-expanded has-icons-left">
                                     <input v-model="form.cost" class="input" type="number" required>
                                     <span class="icon is-small is-left"><i class="fas fa-yen-sign"></i></span>
+                                </p>
+                                <p class="control">
+                                    <a class="button is-danger"><strong>x2</strong></a>
                                 </p>
                             </div>
                         </div>
@@ -126,7 +127,7 @@
             </section>
 
             <footer class="modal-card-foot">
-                <button class="button is-success" @click="this.submitRequestDetails()"><strong>保存する</strong></button>
+                <button class="button is-success" @click="submitRequestDetail()"><strong>保存する</strong></button>
                 <button class="button" @click="$parent.closeModal()">キャンセル</button>
             </footer>
         </div>
@@ -139,10 +140,9 @@ export default {
         return {
             form: {
                 date: new Date(),
-                selected: '',
-                type: '',
-                transportation_id: '',
-                is_oneway: '',
+                type: 1,
+                transportation_id: 1,
+                is_oneway: 0,
                 name: '',
                 from: '',
                 to: '',

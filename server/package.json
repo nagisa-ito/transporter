@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "buefy": "^0.8.6",
+        "moment": "^2.24.0",
         "vuejs-datepicker": "^1.6.2"
     }
 }

@@ -8,6 +8,7 @@
 
 window.Vue = require('vue');
 window.Axios = require('axios');
+window.moment = require('moment');
 
 /**
  * The following block of code may be used to automatically register your

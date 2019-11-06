@@ -9,14 +9,15 @@
             </header>
 
             <section class="modal-card-body">
-                <div>
+                <form id="submit-request-detail">
 
+                    <!-- TODO: デフォルトは表示中の年月にする -->
                     <b-field label="日付">
                         <b-datepicker
                             placeholder="yyyy-mm-dd"
                             icon="calendar-alt"
-                            :date-formatter="(date) => date.toLocaleDateString()"
-                            v-model="form.date">
+                            :date-formatter="dateFormatter"
+                            v-model="datepicker">
                         </b-datepicker>
                     </b-field>
 
@@ -123,11 +124,11 @@
                             <textarea v-model="form.overview" class="textarea"></textarea>
                         </div>
                     </div>
-                </div>
+                </form>
             </section>
 
             <footer class="modal-card-foot">
-                <button class="button is-success" @click="submitRequestDetail()"><strong>保存する</strong></button>
+                <button class="button is-success" @click="submitRequestDetail()" type="submit"><strong>保存する</strong></button>
                 <button class="button" @click="$parent.closeModal()">キャンセル</button>
             </footer>
         </div>
@@ -139,7 +140,7 @@ export default {
     data () {
         return {
             form: {
-                date: new Date(),
+                date: '',
                 type: 1,
                 transportation_id: 1,
                 is_oneway: 0,
@@ -149,15 +150,34 @@ export default {
                 cost: '',
                 overview: ''
             },
+            // buefyのdatepickerではDate型のみ許可され、YYYY-MM-DDの形式をそのまま代入できない。
+            // そのため一旦この変数に代入し、POST時にdateFormatter()で変換したものをコピーして代入する
+            datepicker: new Date(),
         }
     },
     methods : {
+        validateRequestDetail: function () {
+            const elem = document.getElementById("submit-request-detail")
+            if (!elem.reportValidity()) {
+                return false
+            }
+            return true
+        },
         submitRequestDetail: function () {
-            console.log(this.form)
-            // Axios.get('api/request_details')
-            // .then(res => {
-            //     this.request_details = res.data
-            // })
+            if (!this.validateRequestDetail()) {
+                return
+            }
+
+            this.form.date = this.dateFormatter(this.datepicker)
+
+            Axios.get('api/request_details/store')
+            .then(res => {
+                this.request_details = res.data
+                console.log(res.data)
+            })
+        },
+        dateFormatter: function (date) {
+            return moment(date).format('YYYY-MM-DD')
         }
     },
 }

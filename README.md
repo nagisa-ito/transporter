@@ -38,7 +38,7 @@ $ cp .env.example .env
 ```
 $ docker-compose build
 $ docker-compose up -d
-$ cd server
+$ cd src
 $ cp .env.example .env
 ```
 :memo:edit .env

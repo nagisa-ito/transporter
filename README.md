@@ -17,8 +17,6 @@
 ## Constitution
 ```
 transporter/  
-  ├ client/
-  │  └ Vue.js on Vue CLI 3
   ├ src/
   │  └ Laravel Project
   ├ deploy/

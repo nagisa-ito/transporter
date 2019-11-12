@@ -59,6 +59,18 @@ class RequestDetailController extends Controller
      */
     public function store(Request $request)
     {
-        return '通信できました';
+        $request->validate([
+            'name' => 'required|max:255',
+            'date' => 'required|date',
+            'from' => 'required|max:255',
+            'to'   => 'required|max:255',
+            'cost' => 'required|numeric',
+        ]);
+
+        $request_detail = new RequestDetail;
+        $request_detail->user_id = Auth::id();
+        $request_detail->fill($request->all())->save();
+
+        return $request_detail;
     }
 }

@@ -2214,9 +2214,11 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.form.date = this.dateFormatter(this.datepicker);
-      Axios.get('api/request_details/store').then(function (res) {
+      Axios.post('api/request_details/store', this.form).then(function (res) {
         _this.request_details = res.data;
         console.log(res.data);
+      })["catch"](function (err) {
+        console.log(err.response.data);
       });
     },
     dateFormatter: function dateFormatter(date) {

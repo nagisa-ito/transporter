@@ -36,3 +36,4 @@ Route::get('sections/create/{is_regular}', 'SectionController@create');
 
 // 申請
 Route::get('api/request_details', 'RequestDetailController@index');
+Route::post('api/request_details/store', 'RequestDetailController@store');

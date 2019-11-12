@@ -170,11 +170,14 @@ export default {
 
             this.form.date = this.dateFormatter(this.datepicker)
 
-            Axios.get('api/request_details/store')
-            .then(res => {
-                this.request_details = res.data
-                console.log(res.data)
-            })
+            Axios.post('api/request_details/store', this.form)
+                .then(res => {
+                    this.request_details = res.data
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                })
         },
         dateFormatter: function (date) {
             return moment(date).format('YYYY-MM-DD')

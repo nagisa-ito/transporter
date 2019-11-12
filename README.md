@@ -1,12 +1,6 @@
-# Transporter
-## Vue.js + Firebase + Laravel
+# Transporter (In development):beginner:
+## Laravel + Vue.js + Buefy
 
-## Frontend
-### Vue.js needed
-- Node.js >= v8.9.0
-- npm
-
-## Backend API
 ### Laravel needed
 - PHP >= 7.1.3
 - BCMath PHP Extension
@@ -25,7 +19,7 @@
 transporter/  
   ├ client/
   │  └ Vue.js on Vue CLI 3
-  ├ server/
+  ├ src/
   │  └ Laravel Project
   ├ deploy/
   │  └ Dockerfile on Each Service
@@ -41,7 +35,7 @@ $ git clone https://github.com/nagisa-ito/transporter.git
 $ cd transporter
 $ cp .env.example .env
 ```
-EDIT .env
+:memo:edit .env
 
 ```
 $ docker-compose build
@@ -49,7 +43,7 @@ $ docker-compose up -d
 $ cd server
 $ cp .env.example .env
 ```
-EDIT .env
+:memo:edit .env
 
 ```
 $ cd ..

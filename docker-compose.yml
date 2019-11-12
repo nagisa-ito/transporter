@@ -23,7 +23,7 @@ services:
     tty: true
     restart: always
     volumes:
-      - ./server:/var/www
+      - ./src:/var/www
     links:
       - db
 

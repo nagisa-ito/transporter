@@ -60,7 +60,7 @@
                     <span class="icon"><i class="far fa-file-excel"></i></span>
                     <span>Excel</span>
                 </button>
-                <button class="button is-success" @click="openModal()">
+                <button class="button is-success" @click="storeRequestDetail()">
                     <span class="icon"><i class="fas fa-plus"></i></span>
                     <span><strong>追加</strong></span>
                 </button>
@@ -99,7 +99,7 @@
                         <td class="has-text-centered is-size-7" colspan="3">{{ request_detail.overview }}</td>
                         <td class="has-text-centered is-size-7">
                             <div class="buttons is-centered">
-                                <a href="#">
+                                <a href="#" @click="updateRequestDetail(request_detail)">
                                     <button class="button is-link is-small">
                                         <span class="icon is-small"><i class="fas fa-edit"></i></span>
                                     </button>
@@ -120,7 +120,139 @@
 
         <!-- 申請追加モーダル -->
         <transition name="slide-fade">
-            <request-detail-form-component v-show="show_modal"></request-detail-form-component>
+            <div class="modal is-active" v-show="show_modal">
+                <div class="modal-background" @click.self="closeModal()"></div>
+                <div class="modal-card">
+
+                    <header class="modal-card-head">
+                        <p class="modal-card-title"><small>申請を{{ modal_title }}</small></p>
+                        <button class="delete" aria-label="close" @click="closeModal()"></button>
+                    </header>
+
+                    <section class="modal-card-body">
+                        <form id="submit-request-detail">
+
+                            <b-field label="日付">
+                                <b-datepicker
+                                    placeholder="yyyy-mm-dd"
+                                    icon="calendar-alt"
+                                    :date-formatter="dateFormatter"
+                                    v-model="datepicker">
+                                </b-datepicker>
+                            </b-field>
+
+                            <div class="columns">
+                                <div class="column is-4">
+                                    <div class="field">
+                                        <label class="label">分類</label>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="select is-fullwidth">
+                                                    <select v-model="form.type">
+                                                        <option v-for="type in types" :value="type.id">
+                                                            {{ type.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column is-4">
+                                    <div class="field">
+                                        <label class="label">交通手段</label>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="select is-fullwidth">
+                                                    <select v-model="form.transportation_id">
+                                                        <option v-for="transportation in transportations" :value="transportation.id">
+                                                            {{ transportation.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column is-4">
+                                    <div class="field">
+                                        <label class="label">経路</label>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="select is-fullwidth">
+                                                    <select v-model="form.is_oneway">
+                                                        <option value="0">往復</option>
+                                                        <option value="1">片道</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">訪問先</label>
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control is-expanded has-icons-left">
+                                            <input v-model="form.name" class="input" type="text" required>
+                                            <span class="icon is-small is-left"><i class="fas fa-building"></i></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">利用区間</label>
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control is-expanded has-icons-left">
+                                            <input v-model="form.from" class="input" type="text" required placeholder="乗車駅">
+                                            <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
+                                        </p>
+                                    </div>
+                                    <div class="field">
+                                        <p class="control is-expanded has-icons-left">
+                                            <input v-model="form.to" class="input" type="text" required placeholder="降車駅">
+                                            <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">費用</label>
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control is-expanded has-icons-left">
+                                            <input v-model="form.cost" class="input" type="number" required>
+                                            <span class="icon is-small is-left"><i class="fas fa-yen-sign"></i></span>
+                                        </p>
+                                        <p class="control">
+                                            <a class="button is-danger"><strong>x2</strong></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">概要</label>
+                                <div class="control">
+                                    <textarea v-model="form.overview" class="textarea"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+
+                    <footer class="modal-card-foot">
+                        <button class="button is-success" @click="submitRequestDetail()" type="submit"><strong>保存する</strong></button>
+                        <button class="button" @click="closeModal()">キャンセル</button>
+                    </footer>
+                </div>
+            </div>
         </transition>
 
     </div>
@@ -133,12 +265,15 @@ export default {
     data: function() {
         return {
             show_modal: false,
+            modal_title: '追加',
             year_month: '2019/10',
             total_cost: num_formatter.format(12304),
             count: num_formatter.format(12),
             check: false,
             request_details: {
-            }
+            },
+            form: this.initFormData(),
+            datepicker: new Date(), // BuefyのDatepickerがDate型での登録しかできないので別に保管しておく
         }
     },
     props: ['transportations', 'types'],
@@ -150,10 +285,62 @@ export default {
     },
     methods: {
         openModal: function () {
-            this.show_modal = true
+            this.show_modal = true;
         },
         closeModal: function () {
-            this.show_modal = false
+            this.show_modal = false;
+            this.form = this.initFormData();
+            this.datepicker = new Date();
+        },
+        initFormData: function () {
+            return {
+                date: '',
+                type: 1,
+                transportation_id: 1,
+                is_oneway: 0,
+                name: '',
+                from: '',
+                to: '',
+                cost: '',
+                overview: ''
+            };
+        },
+        validateRequestDetail: function () {
+            const elem = document.getElementById("submit-request-detail")
+            if (!elem.reportValidity()) {
+                return false
+            }
+            return true
+        },
+        updateRequestDetail: function(request_detail) {
+            this.modal_title = '編集';
+            this.form = Object.assign({}, request_detail);
+            this.datepicker = new Date(request_detail.date);
+            this.openModal();
+        },
+        storeRequestDetail: function () {
+            this.modal_title = '追加';
+            this.openModal();
+        },
+        submitRequestDetail: function () {
+            this.form.date = this.dateFormatter(this.datepicker);
+            if (!this.validateRequestDetail()) {
+                return;
+            }
+
+            const action_url = (this.form.id) ? 'api/request_details/update' : 'api/request_details/store';
+            console.log(action_url);
+            Axios.post(action_url, this.form)
+                .then(res => {
+                    this.request_details = res.data
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                })
+        },
+        dateFormatter: function (date) {
+            return moment(date).format('YYYY-MM-DD')
         }
     }
 }

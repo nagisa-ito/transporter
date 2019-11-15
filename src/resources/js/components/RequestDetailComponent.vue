@@ -158,7 +158,7 @@
                                             <div class="field-body">
                                                 <div class="field">
                                                     <div class="select is-fullwidth">
-                                                        <select v-model="form.type">
+                                                        <select v-model="form_data.type">
                                                             <option v-for="type in types" :value="type.id">
                                                                 {{ type.name }}
                                                             </option>
@@ -175,7 +175,7 @@
                                             <div class="field-body">
                                                 <div class="field">
                                                     <div class="select is-fullwidth">
-                                                        <select v-model="form.transportation_id">
+                                                        <select v-model="form_data.transportation_id">
                                                             <option v-for="transportation in transportations" :value="transportation.id">
                                                                 {{ transportation.name }}
                                                             </option>
@@ -192,7 +192,7 @@
                                             <div class="field-body">
                                                 <div class="field">
                                                     <div class="select is-fullwidth">
-                                                        <select v-model="form.is_oneway">
+                                                        <select v-model="form_data.is_oneway">
                                                             <option value="0">往復</option>
                                                             <option value="1">片道</option>
                                                         </select>
@@ -208,7 +208,7 @@
                                     <div class="field-body">
                                         <div class="field">
                                             <p class="control is-expanded has-icons-left">
-                                                <input v-model="form.name" class="input" type="text" required>
+                                                <input v-model="form_data.name" class="input" type="text" required>
                                                 <span class="icon is-small is-left"><i class="fas fa-building"></i></span>
                                             </p>
                                         </div>
@@ -220,13 +220,13 @@
                                     <div class="field-body">
                                         <div class="field">
                                             <p class="control is-expanded has-icons-left">
-                                                <input v-model="form.from" class="input" type="text" required placeholder="乗車駅">
+                                                <input v-model="form_data.from" class="input" type="text" required placeholder="乗車駅">
                                                 <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
                                             </p>
                                         </div>
                                         <div class="field">
                                             <p class="control is-expanded has-icons-left">
-                                                <input v-model="form.to" class="input" type="text" required placeholder="降車駅">
+                                                <input v-model="form_data.to" class="input" type="text" required placeholder="降車駅">
                                                 <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
                                             </p>
                                         </div>
@@ -238,7 +238,7 @@
                                     <div class="field-body">
                                         <div class="field has-addons">
                                             <p class="control is-expanded has-icons-left">
-                                                <input v-model="form.cost" class="input" type="number" required>
+                                                <input v-model="form_data.cost" class="input" type="number" required>
                                                 <span class="icon is-small is-left"><i class="fas fa-yen-sign"></i></span>
                                             </p>
                                             <p class="control">
@@ -251,7 +251,7 @@
                                 <div class="field">
                                     <label class="label">概要</label>
                                     <div class="control">
-                                        <textarea v-model="form.overview" class="textarea"></textarea>
+                                        <textarea v-model="form_data.overview" class="textarea"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -302,7 +302,7 @@ export default {
             check: false,
             request_details: {},
             delete_request_detail: {},
-            form: this.initFormData(),
+            form_data: this.initFormData(),
             datepicker: new Date(), // BuefyのDatepickerがDate型での登録しかできないので別に保管しておく
         }
     },
@@ -319,7 +319,7 @@ export default {
         },
         closeModal: function () {
             this.modal.is_show = false;
-            this.form = this.initFormData();
+            this.form_data = this.initFormData();
             this.datepicker = new Date();
         },
         initFormData: function () {
@@ -352,7 +352,7 @@ export default {
             this.modal.title = '編集';
             // TODO: もっとまともな名前にする
             this.modal.mode = 'form';
-            this.form = Object.assign({}, request_detail);
+            this.form_data = Object.assign({}, request_detail);
             this.datepicker = new Date(request_detail.date);
             this.openModal();
         },
@@ -364,13 +364,13 @@ export default {
             this.openModal();
         },
         submitRequestDetail: function () {
-            this.form.date = this.dateFormatter(this.datepicker);
+            this.form_data.date = this.dateFormatter(this.datepicker);
             if (!this.validateRequestDetail()) {
                 return;
             }
 
-            const action_url = (this.form.id) ? 'api/request_details/update' : 'api/request_details/store';
-            Axios.post(action_url, this.form)
+            const action_url = (this.form_data.id) ? 'api/request_details/update' : 'api/request_details/store';
+            Axios.post(action_url, this.form_data)
                 .then(res => {
                     console.log(res.data)
                 })

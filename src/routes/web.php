@@ -37,3 +37,5 @@ Route::get('sections/create/{is_regular}', 'SectionController@create');
 // 申請
 Route::get('api/request_details', 'RequestDetailController@index');
 Route::post('api/request_details/store', 'RequestDetailController@store');
+Route::post('api/request_details/update', 'RequestDetailController@update');
+Route::post('api/request_details/delete', 'RequestDetailController@delete');

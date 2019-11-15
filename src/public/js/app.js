@@ -1999,16 +1999,183 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var num_formatter = new Intl.NumberFormat('ja-JP');
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      show_modal: false,
+      modal: {
+        is_show: false,
+        title: '追加',
+        mode: 'form'
+      },
       year_month: '2019/10',
       total_cost: num_formatter.format(12304),
       count: num_formatter.format(12),
       check: false,
-      request_details: {}
+      request_details: {},
+      delete_request_detail: {},
+      form: this.initFormData(),
+      datepicker: new Date() // BuefyのDatepickerがDate型での登録しかできないので別に保管しておく
+
     };
   },
   props: ['transportations', 'types'],
@@ -2021,166 +2188,15 @@ var num_formatter = new Intl.NumberFormat('ja-JP');
   },
   methods: {
     openModal: function openModal() {
-      this.show_modal = true;
+      this.modal.is_show = true;
     },
     closeModal: function closeModal() {
-      this.show_modal = false;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RequestDetailFormComponent.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RequestDetailFormComponent.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      form: {
+      this.modal.is_show = false;
+      this.form = this.initFormData();
+      this.datepicker = new Date();
+    },
+    initFormData: function initFormData() {
+      return {
         date: '',
         type: 1,
         transportation_id: 1,
@@ -2190,13 +2206,8 @@ __webpack_require__.r(__webpack_exports__);
         to: '',
         cost: '',
         overview: ''
-      },
-      // buefyのdatepickerではDate型のみ許可され、YYYY-MM-DDの形式をそのまま代入できない。
-      // そのため一旦この変数に代入し、POST時にdateFormatter()で変換したものをコピーして代入する
-      datepicker: new Date()
-    };
-  },
-  methods: {
+      };
+    },
     validateRequestDetail: function validateRequestDetail() {
       var elem = document.getElementById("submit-request-detail");
 
@@ -2206,16 +2217,46 @@ __webpack_require__.r(__webpack_exports__);
 
       return true;
     },
+    storeRequestDetail: function storeRequestDetail() {
+      this.modal.title = '追加'; // TODO: もっとまともな名前にする
+
+      this.modal.mode = 'form';
+      this.openModal();
+    },
+    updateRequestDetail: function updateRequestDetail(request_detail) {
+      this.modal.title = '編集'; // TODO: もっとまともな名前にする
+
+      this.modal.mode = 'form';
+      this.form = Object.assign({}, request_detail);
+      this.datepicker = new Date(request_detail.date);
+      this.openModal();
+    },
+    deleteRequestDetail: function deleteRequestDetail(request_detail) {
+      this.modal.title = '削除'; // TODO: もっとまともな名前にする
+
+      this.modal.mode = 'confirm';
+      this.delete_request_detail = Object.assign({}, request_detail);
+      this.openModal();
+    },
     submitRequestDetail: function submitRequestDetail() {
-      var _this = this;
+      this.form.date = this.dateFormatter(this.datepicker);
 
       if (!this.validateRequestDetail()) {
         return;
       }
 
-      this.form.date = this.dateFormatter(this.datepicker);
-      Axios.post('api/request_details/store', this.form).then(function (res) {
-        _this.request_details = res.data;
+      var action_url = this.form.id ? 'api/request_details/update' : 'api/request_details/store';
+      Axios.post(action_url, this.form).then(function (res) {
+        console.log(res.data);
+      })["catch"](function (err) {
+        console.log(err.response.data);
+      });
+    },
+    // TODO: メソッド名がひどすぎるので変更すること
+    submitRequestDetail2: function submitRequestDetail2() {
+      Axios.post('api/request_details/delete', {
+        'id': this.delete_request_detail.id
+      }).then(function (res) {
         console.log(res.data);
       })["catch"](function (err) {
         console.log(err.response.data);
@@ -34127,7 +34168,7 @@ var render = function() {
               staticClass: "button is-success",
               on: {
                 click: function($event) {
-                  return _vm.openModal()
+                  return _vm.storeRequestDetail()
                 }
               }
             },
@@ -34196,33 +34237,678 @@ var render = function() {
                         [_vm._v(_vm._s(request_detail.overview))]
                       ),
                       _vm._v(" "),
-                      _vm._m(9, true)
+                      _c("td", { staticClass: "has-text-centered is-size-7" }, [
+                        _c("div", { staticClass: "buttons is-centered" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateRequestDetail(request_detail)
+                                }
+                              }
+                            },
+                            [_vm._m(9, true)]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteRequestDetail(request_detail)
+                                }
+                              }
+                            },
+                            [_vm._m(10, true)]
+                          )
+                        ])
+                      ])
                     ])
                   }),
                   0
                 )
-              : _c("tbody", [_vm._m(10)])
+              : _c("tbody", [_vm._m(11)])
           ]
         )
       ]),
       _vm._v(" "),
-      _c(
-        "transition",
-        { attrs: { name: "slide-fade" } },
-        [
-          _c("request-detail-form-component", {
+      _c("transition", { attrs: { name: "slide-fade" } }, [
+        _c(
+          "div",
+          {
             directives: [
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.show_modal,
-                expression: "show_modal"
+                value: _vm.modal.is_show,
+                expression: "modal.is_show"
               }
-            ]
-          })
-        ],
-        1
-      )
+            ],
+            staticClass: "modal is-active"
+          },
+          [
+            _c("div", {
+              staticClass: "modal-background",
+              on: {
+                click: function($event) {
+                  if ($event.target !== $event.currentTarget) {
+                    return null
+                  }
+                  return _vm.closeModal()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-card" }, [
+              _c("header", { staticClass: "modal-card-head" }, [
+                _c("p", { staticClass: "modal-card-title" }, [
+                  _c("small", [_vm._v("申請を" + _vm._s(_vm.modal.title))])
+                ]),
+                _vm._v(" "),
+                _c("button", {
+                  staticClass: "delete",
+                  attrs: { "aria-label": "close" },
+                  on: {
+                    click: function($event) {
+                      return _vm.closeModal()
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "section",
+                { staticClass: "modal-card-body" },
+                [
+                  _vm.modal.mode == "form"
+                    ? [
+                        _c(
+                          "form",
+                          { attrs: { id: "submit-request-detail" } },
+                          [
+                            _c(
+                              "b-field",
+                              { attrs: { label: "日付" } },
+                              [
+                                _c("b-datepicker", {
+                                  attrs: {
+                                    placeholder: "yyyy-mm-dd",
+                                    icon: "calendar-alt",
+                                    "date-formatter": _vm.dateFormatter
+                                  },
+                                  model: {
+                                    value: _vm.datepicker,
+                                    callback: function($$v) {
+                                      _vm.datepicker = $$v
+                                    },
+                                    expression: "datepicker"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "columns" }, [
+                              _c("div", { staticClass: "column is-4" }, [
+                                _c("div", { staticClass: "field" }, [
+                                  _c("label", { staticClass: "label" }, [
+                                    _vm._v("分類")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "field-body" }, [
+                                    _c("div", { staticClass: "field" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "select is-fullwidth" },
+                                        [
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.type,
+                                                  expression: "form.type"
+                                                }
+                                              ],
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "type",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            _vm._l(_vm.types, function(type) {
+                                              return _c(
+                                                "option",
+                                                {
+                                                  domProps: { value: type.id }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                            " +
+                                                      _vm._s(type.name) +
+                                                      "\n                                                        "
+                                                  )
+                                                ]
+                                              )
+                                            }),
+                                            0
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "column is-4" }, [
+                                _c("div", { staticClass: "field" }, [
+                                  _c("label", { staticClass: "label" }, [
+                                    _vm._v("交通手段")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "field-body" }, [
+                                    _c("div", { staticClass: "field" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "select is-fullwidth" },
+                                        [
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.form.transportation_id,
+                                                  expression:
+                                                    "form.transportation_id"
+                                                }
+                                              ],
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "transportation_id",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            _vm._l(
+                                              _vm.transportations,
+                                              function(transportation) {
+                                                return _c(
+                                                  "option",
+                                                  {
+                                                    domProps: {
+                                                      value: transportation.id
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            " +
+                                                        _vm._s(
+                                                          transportation.name
+                                                        ) +
+                                                        "\n                                                        "
+                                                    )
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "column is-4" }, [
+                                _c("div", { staticClass: "field" }, [
+                                  _c("label", { staticClass: "label" }, [
+                                    _vm._v("経路")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "field-body" }, [
+                                    _c("div", { staticClass: "field" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "select is-fullwidth" },
+                                        [
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.is_oneway,
+                                                  expression: "form.is_oneway"
+                                                }
+                                              ],
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "is_oneway",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "0" } },
+                                                [_vm._v("往復")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "1" } },
+                                                [_vm._v("片道")]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "field" }, [
+                              _c("label", { staticClass: "label" }, [
+                                _vm._v("訪問先")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "field-body" }, [
+                                _c("div", { staticClass: "field" }, [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "control is-expanded has-icons-left"
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.name,
+                                            expression: "form.name"
+                                          }
+                                        ],
+                                        staticClass: "input",
+                                        attrs: { type: "text", required: "" },
+                                        domProps: { value: _vm.form.name },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form,
+                                              "name",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "icon is-small is-left"
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-building"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "field" }, [
+                              _c("label", { staticClass: "label" }, [
+                                _vm._v("利用区間")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "field-body" }, [
+                                _c("div", { staticClass: "field" }, [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "control is-expanded has-icons-left"
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.from,
+                                            expression: "form.from"
+                                          }
+                                        ],
+                                        staticClass: "input",
+                                        attrs: {
+                                          type: "text",
+                                          required: "",
+                                          placeholder: "乗車駅"
+                                        },
+                                        domProps: { value: _vm.form.from },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form,
+                                              "from",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "icon is-small is-left"
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-train"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "field" }, [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "control is-expanded has-icons-left"
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.to,
+                                            expression: "form.to"
+                                          }
+                                        ],
+                                        staticClass: "input",
+                                        attrs: {
+                                          type: "text",
+                                          required: "",
+                                          placeholder: "降車駅"
+                                        },
+                                        domProps: { value: _vm.form.to },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form,
+                                              "to",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "icon is-small is-left"
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-train"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "field" }, [
+                              _c("label", { staticClass: "label" }, [
+                                _vm._v("費用")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "field-body" }, [
+                                _c("div", { staticClass: "field has-addons" }, [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "control is-expanded has-icons-left"
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.cost,
+                                            expression: "form.cost"
+                                          }
+                                        ],
+                                        staticClass: "input",
+                                        attrs: { type: "number", required: "" },
+                                        domProps: { value: _vm.form.cost },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form,
+                                              "cost",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "icon is-small is-left"
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-yen-sign"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p", { staticClass: "control" }, [
+                                    _c(
+                                      "a",
+                                      { staticClass: "button is-danger" },
+                                      [_c("strong", [_vm._v("x2")])]
+                                    )
+                                  ])
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "field" }, [
+                              _c("label", { staticClass: "label" }, [
+                                _vm._v("概要")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "control" }, [
+                                _c("textarea", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.overview,
+                                      expression: "form.overview"
+                                    }
+                                  ],
+                                  staticClass: "textarea",
+                                  domProps: { value: _vm.form.overview },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.form,
+                                        "overview",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          ],
+                          1
+                        )
+                      ]
+                    : [
+                        _c("span", [
+                          _vm._v(
+                            '"' +
+                              _vm._s(_vm.delete_request_detail.name) +
+                              '" を削除します。よろしいですか？'
+                          )
+                        ])
+                      ]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("footer", { staticClass: "modal-card-foot" }, [
+                _vm.modal.mode == "form"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-success",
+                        attrs: { type: "submit" },
+                        on: {
+                          click: function($event) {
+                            return _vm.submitRequestDetail()
+                          }
+                        }
+                      },
+                      [_c("strong", [_vm._v("保存する")])]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "button is-danger",
+                        attrs: { type: "submit" },
+                        on: {
+                          click: function($event) {
+                            return _vm.submitRequestDetail2()
+                          }
+                        }
+                      },
+                      [_c("strong", [_vm._v("削除する")])]
+                    ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    on: {
+                      click: function($event) {
+                        return _vm.closeModal()
+                      }
+                    }
+                  },
+                  [_vm._v("キャンセル")]
+                )
+              ])
+            ])
+          ]
+        )
+      ])
     ],
     1
   )
@@ -34387,17 +35073,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "has-text-centered is-size-7" }, [
-      _c("div", { staticClass: "buttons is-centered" }, [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("button", { staticClass: "button is-link is-small" }, [
-            _c("span", { staticClass: "icon is-small" }, [
-              _c("i", { staticClass: "fas fa-edit" })
-            ])
-          ])
+    return _c(
+      "button",
+      { staticClass: "button is-small is-outlined is-link" },
+      [
+        _c("span", { staticClass: "icon is-small" }, [
+          _c("i", { staticClass: "fas fa-pencil-alt" })
         ])
-      ])
-    ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "button is-small is-outlined is-danger" },
+      [
+        _c("span", { staticClass: "icon is-small" }, [
+          _c("i", { staticClass: "fas fa-trash-alt" })
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -34408,528 +35106,6 @@ var staticRenderFns = [
         _c("p", { staticClass: "text-center has-text-grey-light" }, [
           _c("small", [_vm._v("登録済みの区間がありません")])
         ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "modal is-active" }, [
-    _c("div", {
-      staticClass: "modal-background",
-      on: {
-        click: function($event) {
-          if ($event.target !== $event.currentTarget) {
-            return null
-          }
-          return _vm.$parent.closeModal()
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "modal-card" }, [
-      _c("header", { staticClass: "modal-card-head" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("button", {
-          staticClass: "delete",
-          attrs: { "aria-label": "close" },
-          on: {
-            click: function($event) {
-              return _vm.$parent.closeModal()
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "modal-card-body" }, [
-        _c(
-          "form",
-          { attrs: { id: "submit-request-detail" } },
-          [
-            _c(
-              "b-field",
-              { attrs: { label: "日付" } },
-              [
-                _c("b-datepicker", {
-                  attrs: {
-                    placeholder: "yyyy-mm-dd",
-                    icon: "calendar-alt",
-                    "date-formatter": _vm.dateFormatter
-                  },
-                  model: {
-                    value: _vm.datepicker,
-                    callback: function($$v) {
-                      _vm.datepicker = $$v
-                    },
-                    expression: "datepicker"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "columns" }, [
-              _c("div", { staticClass: "column is-4" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("分類")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "field-body" }, [
-                    _c("div", { staticClass: "field" }, [
-                      _c("div", { staticClass: "select is-fullwidth" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.type,
-                                expression: "form.type"
-                              }
-                            ],
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "type",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          _vm._l(_vm.$parent.types, function(type) {
-                            return _c(
-                              "option",
-                              { domProps: { value: type.id } },
-                              [
-                                _vm._v(
-                                  "\n                                                " +
-                                    _vm._s(type.name) +
-                                    "\n                                            "
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "column is-4" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("交通手段")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "field-body" }, [
-                    _c("div", { staticClass: "field" }, [
-                      _c("div", { staticClass: "select is-fullwidth" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.transportation_id,
-                                expression: "form.transportation_id"
-                              }
-                            ],
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "transportation_id",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          _vm._l(_vm.$parent.transportations, function(
-                            transportation
-                          ) {
-                            return _c(
-                              "option",
-                              { domProps: { value: transportation.id } },
-                              [
-                                _vm._v(
-                                  "\n                                                " +
-                                    _vm._s(transportation.name) +
-                                    "\n                                            "
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "column is-4" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("経路")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "field-body" }, [
-                    _c("div", { staticClass: "field" }, [
-                      _c("div", { staticClass: "select is-fullwidth" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.is_oneway,
-                                expression: "form.is_oneway"
-                              }
-                            ],
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "is_oneway",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "0" } }, [
-                              _vm._v("往復")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "1" } }, [
-                              _vm._v("片道")
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("訪問先")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "field-body" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c(
-                    "p",
-                    { staticClass: "control is-expanded has-icons-left" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.name,
-                            expression: "form.name"
-                          }
-                        ],
-                        staticClass: "input",
-                        attrs: { type: "text", required: "" },
-                        domProps: { value: _vm.form.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "name", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1)
-                    ]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("利用区間")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "field-body" }, [
-                _c("div", { staticClass: "field" }, [
-                  _c(
-                    "p",
-                    { staticClass: "control is-expanded has-icons-left" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.from,
-                            expression: "form.from"
-                          }
-                        ],
-                        staticClass: "input",
-                        attrs: {
-                          type: "text",
-                          required: "",
-                          placeholder: "乗車駅"
-                        },
-                        domProps: { value: _vm.form.from },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "from", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2)
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c(
-                    "p",
-                    { staticClass: "control is-expanded has-icons-left" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.to,
-                            expression: "form.to"
-                          }
-                        ],
-                        staticClass: "input",
-                        attrs: {
-                          type: "text",
-                          required: "",
-                          placeholder: "降車駅"
-                        },
-                        domProps: { value: _vm.form.to },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "to", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3)
-                    ]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("費用")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "field-body" }, [
-                _c("div", { staticClass: "field has-addons" }, [
-                  _c(
-                    "p",
-                    { staticClass: "control is-expanded has-icons-left" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.cost,
-                            expression: "form.cost"
-                          }
-                        ],
-                        staticClass: "input",
-                        attrs: { type: "number", required: "" },
-                        domProps: { value: _vm.form.cost },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "cost", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(4)
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm._m(5)
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("概要")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "control" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.overview,
-                      expression: "form.overview"
-                    }
-                  ],
-                  staticClass: "textarea",
-                  domProps: { value: _vm.form.overview },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "overview", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ])
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("footer", { staticClass: "modal-card-foot" }, [
-        _c(
-          "button",
-          {
-            staticClass: "button is-success",
-            attrs: { type: "submit" },
-            on: {
-              click: function($event) {
-                return _vm.submitRequestDetail()
-              }
-            }
-          },
-          [_c("strong", [_vm._v("保存する")])]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "button",
-            on: {
-              click: function($event) {
-                return _vm.$parent.closeModal()
-              }
-            }
-          },
-          [_vm._v("キャンセル")]
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "modal-card-title" }, [
-      _c("small", [_vm._v("申請を追加")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-building" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-train" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-train" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-yen-sign" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "control" }, [
-      _c("a", { staticClass: "button is-danger" }, [
-        _c("strong", [_vm._v("x2")])
       ])
     ])
   }
@@ -47352,7 +47528,6 @@ module.exports = function(module) {
 var map = {
 	"./components/ExampleComponent.vue": "./resources/js/components/ExampleComponent.vue",
 	"./components/RequestDetailComponent.vue": "./resources/js/components/RequestDetailComponent.vue",
-	"./components/RequestDetailFormComponent.vue": "./resources/js/components/RequestDetailFormComponent.vue",
 	"./components/register/EmailPassComponent.vue": "./resources/js/components/register/EmailPassComponent.vue",
 	"./components/register/SectionsComponent.vue": "./resources/js/components/register/SectionsComponent.vue",
 	"./components/register/UserNameComponent.vue": "./resources/js/components/register/UserNameComponent.vue"
@@ -47583,75 +47758,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestDetailComponent_vue_vue_type_template_id_12b49270___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestDetailComponent_vue_vue_type_template_id_12b49270___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/RequestDetailFormComponent.vue":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/RequestDetailFormComponent.vue ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _RequestDetailFormComponent_vue_vue_type_template_id_5712a6e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4& */ "./resources/js/components/RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4&");
-/* harmony import */ var _RequestDetailFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RequestDetailFormComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/RequestDetailFormComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _RequestDetailFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _RequestDetailFormComponent_vue_vue_type_template_id_5712a6e4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _RequestDetailFormComponent_vue_vue_type_template_id_5712a6e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/RequestDetailFormComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/RequestDetailFormComponent.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/RequestDetailFormComponent.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestDetailFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./RequestDetailFormComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RequestDetailFormComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestDetailFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4& ***!
-  \***********************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestDetailFormComponent_vue_vue_type_template_id_5712a6e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RequestDetailFormComponent.vue?vue&type=template&id=5712a6e4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestDetailFormComponent_vue_vue_type_template_id_5712a6e4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestDetailFormComponent_vue_vue_type_template_id_5712a6e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

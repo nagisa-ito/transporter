@@ -100,8 +100,17 @@
                         <td class="has-text-centered is-size-7">
                             <div class="buttons is-centered">
                                 <a href="#" @click="updateRequestDetail(request_detail)">
-                                    <button class="button is-link is-small">
-                                        <span class="icon is-small"><i class="fas fa-edit"></i></span>
+                                    <button class="button is-small is-outlined is-link">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </span>
+                                    </button>
+                                </a>
+                                <a href="#" @click="deleteRequestDetail(request_detail)">
+                                    <button class="button is-small is-outlined is-danger">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </span>
                                     </button>
                                 </a>
                             </div>
@@ -118,137 +127,155 @@
             </table>
         </div>
 
-        <!-- 申請追加モーダル -->
+        <!-- モーダル -->
         <transition name="slide-fade">
-            <div class="modal is-active" v-show="show_modal">
+            <div class="modal is-active" v-show="modal.is_show">
                 <div class="modal-background" @click.self="closeModal()"></div>
                 <div class="modal-card">
 
                     <header class="modal-card-head">
-                        <p class="modal-card-title"><small>申請を{{ modal_title }}</small></p>
+                        <p class="modal-card-title"><small>申請を{{ modal.title }}</small></p>
                         <button class="delete" aria-label="close" @click="closeModal()"></button>
                     </header>
 
                     <section class="modal-card-body">
-                        <form id="submit-request-detail">
+                        <template v-if="modal.mode == 'form'">
+                            <form id="submit-request-detail">
 
-                            <b-field label="日付">
-                                <b-datepicker
-                                    placeholder="yyyy-mm-dd"
-                                    icon="calendar-alt"
-                                    :date-formatter="dateFormatter"
-                                    v-model="datepicker">
-                                </b-datepicker>
-                            </b-field>
+                                <b-field label="日付">
+                                    <b-datepicker
+                                        placeholder="yyyy-mm-dd"
+                                        icon="calendar-alt"
+                                        :date-formatter="dateFormatter"
+                                        v-model="datepicker">
+                                    </b-datepicker>
+                                </b-field>
 
-                            <div class="columns">
-                                <div class="column is-4">
-                                    <div class="field">
-                                        <label class="label">分類</label>
-                                        <div class="field-body">
-                                            <div class="field">
-                                                <div class="select is-fullwidth">
-                                                    <select v-model="form.type">
-                                                        <option v-for="type in types" :value="type.id">
-                                                            {{ type.name }}
-                                                        </option>
-                                                    </select>
+                                <div class="columns">
+                                    <div class="column is-4">
+                                        <div class="field">
+                                            <label class="label">分類</label>
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    <div class="select is-fullwidth">
+                                                        <select v-model="form.type">
+                                                            <option v-for="type in types" :value="type.id">
+                                                                {{ type.name }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="column is-4">
+                                        <div class="field">
+                                            <label class="label">交通手段</label>
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    <div class="select is-fullwidth">
+                                                        <select v-model="form.transportation_id">
+                                                            <option v-for="transportation in transportations" :value="transportation.id">
+                                                                {{ transportation.name }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="column is-4">
+                                        <div class="field">
+                                            <label class="label">経路</label>
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    <div class="select is-fullwidth">
+                                                        <select v-model="form.is_oneway">
+                                                            <option value="0">往復</option>
+                                                            <option value="1">片道</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="column is-4">
-                                    <div class="field">
-                                        <label class="label">交通手段</label>
-                                        <div class="field-body">
-                                            <div class="field">
-                                                <div class="select is-fullwidth">
-                                                    <select v-model="form.transportation_id">
-                                                        <option v-for="transportation in transportations" :value="transportation.id">
-                                                            {{ transportation.name }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                <div class="field">
+                                    <label class="label">訪問先</label>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <p class="control is-expanded has-icons-left">
+                                                <input v-model="form.name" class="input" type="text" required>
+                                                <span class="icon is-small is-left"><i class="fas fa-building"></i></span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="column is-4">
-                                    <div class="field">
-                                        <label class="label">経路</label>
-                                        <div class="field-body">
-                                            <div class="field">
-                                                <div class="select is-fullwidth">
-                                                    <select v-model="form.is_oneway">
-                                                        <option value="0">往復</option>
-                                                        <option value="1">片道</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                <div class="field">
+                                    <label class="label">利用区間</label>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <p class="control is-expanded has-icons-left">
+                                                <input v-model="form.from" class="input" type="text" required placeholder="乗車駅">
+                                                <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
+                                            </p>
+                                        </div>
+                                        <div class="field">
+                                            <p class="control is-expanded has-icons-left">
+                                                <input v-model="form.to" class="input" type="text" required placeholder="降車駅">
+                                                <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="field">
-                                <label class="label">訪問先</label>
-                                <div class="field-body">
-                                    <div class="field">
-                                        <p class="control is-expanded has-icons-left">
-                                            <input v-model="form.name" class="input" type="text" required>
-                                            <span class="icon is-small is-left"><i class="fas fa-building"></i></span>
-                                        </p>
+                                <div class="field">
+                                    <label class="label">費用</label>
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control is-expanded has-icons-left">
+                                                <input v-model="form.cost" class="input" type="number" required>
+                                                <span class="icon is-small is-left"><i class="fas fa-yen-sign"></i></span>
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-danger"><strong>x2</strong></a>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="field">
-                                <label class="label">利用区間</label>
-                                <div class="field-body">
-                                    <div class="field">
-                                        <p class="control is-expanded has-icons-left">
-                                            <input v-model="form.from" class="input" type="text" required placeholder="乗車駅">
-                                            <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
-                                        </p>
-                                    </div>
-                                    <div class="field">
-                                        <p class="control is-expanded has-icons-left">
-                                            <input v-model="form.to" class="input" type="text" required placeholder="降車駅">
-                                            <span class="icon is-small is-left"><i class="fas fa-train"></i></span>
-                                        </p>
+                                <div class="field">
+                                    <label class="label">概要</label>
+                                    <div class="control">
+                                        <textarea v-model="form.overview" class="textarea"></textarea>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label">費用</label>
-                                <div class="field-body">
-                                    <div class="field has-addons">
-                                        <p class="control is-expanded has-icons-left">
-                                            <input v-model="form.cost" class="input" type="number" required>
-                                            <span class="icon is-small is-left"><i class="fas fa-yen-sign"></i></span>
-                                        </p>
-                                        <p class="control">
-                                            <a class="button is-danger"><strong>x2</strong></a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label">概要</label>
-                                <div class="control">
-                                    <textarea v-model="form.overview" class="textarea"></textarea>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </template>
+                        <template v-else>
+                            <span>"{{ delete_request_detail.name }}" を削除します。よろしいですか？</span>
+                        </template>
                     </section>
 
                     <footer class="modal-card-foot">
-                        <button class="button is-success" @click="submitRequestDetail()" type="submit"><strong>保存する</strong></button>
+                        <button
+                            v-if="modal.mode == 'form'"
+                            @click="submitRequestDetail()"
+                            class="button is-success"
+                            type="submit">
+                            <strong>保存する</strong>
+                        </button>
+                        <button
+                            v-else
+                            @click="submitRequestDetail2()"
+                            class="button is-danger"
+                            type="submit">
+                            <strong>削除する</strong>
+                        </button>
                         <button class="button" @click="closeModal()">キャンセル</button>
                     </footer>
                 </div>
@@ -264,14 +291,17 @@ const num_formatter = new Intl.NumberFormat('ja-JP');
 export default {
     data: function() {
         return {
-            show_modal: false,
-            modal_title: '追加',
+            modal: {
+                is_show: false,
+                title: '追加',
+                mode: 'form',
+            },
             year_month: '2019/10',
             total_cost: num_formatter.format(12304),
             count: num_formatter.format(12),
             check: false,
-            request_details: {
-            },
+            request_details: {},
+            delete_request_detail: {},
             form: this.initFormData(),
             datepicker: new Date(), // BuefyのDatepickerがDate型での登録しかできないので別に保管しておく
         }
@@ -285,10 +315,10 @@ export default {
     },
     methods: {
         openModal: function () {
-            this.show_modal = true;
+            this.modal.is_show = true;
         },
         closeModal: function () {
-            this.show_modal = false;
+            this.modal.is_show = false;
             this.form = this.initFormData();
             this.datepicker = new Date();
         },
@@ -312,14 +342,25 @@ export default {
             }
             return true
         },
-        updateRequestDetail: function(request_detail) {
-            this.modal_title = '編集';
+        storeRequestDetail: function () {
+            this.modal.title = '追加';
+            // TODO: もっとまともな名前にする
+            this.modal.mode = 'form';
+            this.openModal();
+        },
+        updateRequestDetail: function (request_detail) {
+            this.modal.title = '編集';
+            // TODO: もっとまともな名前にする
+            this.modal.mode = 'form';
             this.form = Object.assign({}, request_detail);
             this.datepicker = new Date(request_detail.date);
             this.openModal();
         },
-        storeRequestDetail: function () {
-            this.modal_title = '追加';
+        deleteRequestDetail: function (request_detail) {
+            this.modal.title = '削除';
+            // TODO: もっとまともな名前にする
+            this.modal.mode = 'confirm';
+            this.delete_request_detail = Object.assign({}, request_detail);
             this.openModal();
         },
         submitRequestDetail: function () {
@@ -329,10 +370,18 @@ export default {
             }
 
             const action_url = (this.form.id) ? 'api/request_details/update' : 'api/request_details/store';
-            console.log(action_url);
             Axios.post(action_url, this.form)
                 .then(res => {
-                    this.request_details = res.data
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                })
+        },
+        // TODO: メソッド名がひどすぎるので変更すること
+        submitRequestDetail2: function () {
+            Axios.post('api/request_details/delete', {'id' : this.delete_request_detail.id})
+                .then(res => {
                     console.log(res.data)
                 })
                 .catch(err => {
